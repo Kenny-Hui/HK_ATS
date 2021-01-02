@@ -1,6 +1,5 @@
 ﻿using OpenBveApi.Runtime;
 using OpenBveApi.Colors;
-using System.Windows.Forms;
 
 namespace Plugin
 {
@@ -12,18 +11,15 @@ namespace Plugin
 		public int BrakeNotch;
 		public int B67Notch;
 		Config cfg = new Config();
-		Panel panel = new Panel();
-		SafetySystem safety = new SafetySystem();
+		Interlocker interlock = new Interlocker();
 		/// <summary>Is called when the plugin is loaded.</summary>
 		public bool Load(LoadProperties properties) {
 			MessageManager.Initialise(properties.AddMessage);
 			cfg.Load(properties);
-			Panel panel = new Panel();
-			MessageBox.Show(cfg.Key2.ToString());
 			Panel = new int[256];
 			Sound = new SoundHelper(properties.PlaySound, 256);
 			properties.Panel = Panel;
-			properties.FailureReason = "HKTrainSys failed to initalize, some functions will be unavailable.";
+			properties.FailureReason = "HK_ATS failed to initalize, some functions will be unavailable.";
 			properties.AISupport = AISupport.None;
 			return true;
 		}
@@ -33,9 +29,9 @@ namespace Plugin
 
 		/// <summary>Is called after loading to inform the plugin about the specifications of the train.</summary>
 		public void SetVehicleSpecs(VehicleSpecs specs) {
-			safety.PowerNotch = specs.PowerNotches;
-			safety.BrakeNotch = specs.BrakeNotches;
-			safety.B67Notch = specs.B67Notch;
+			SafetySystem.PowerNotch = specs.PowerNotches;
+			SafetySystem.BrakeNotch = specs.BrakeNotches;
+			interlock.B67Notch = specs.B67Notch;
 		}
 
 		/// <summary>Is called when the plugin should initialize, reinitialize or jumping stations.</summary>
@@ -44,29 +40,9 @@ namespace Plugin
 
 		/// <summary>Is called every frame.</summary>
 		public void Elapse(ElapseData data) {
-			//safety.update(data);
-			if (data.Vehicle.Speed.KilometersPerHour > 2) {
-				data.DoorInterlockState = DoorInterlockStates.Locked;
-			} else {
-				data.DoorInterlockState = DoorInterlockStates.Unlocked;
-			}
-
-			
-			/*if (data.PrecedingVehicle != null)
-			{
-				if (data.PrecedingVehicle.Distance < 0.1 && data.PrecedingVehicle.Distance > -1 && crashed == false)
-				{
-						Sound[223] = SoundInstructions.PlayOnce; //Crash Sound
-						Panel[105] = 0;
-						Panel[106] = 0;
-						Panel[101] = 1;
-						Panel[213] = 1;
-						Panel[100] = 1;
-						crashed = true;
-				}
-
-			}*/
-
+			interlock.update(data);
+			SafetySystem.update(data);
+			MessageManager.PrintMessage(Interlocker.StationInterlock.ToString(), MessageColor.Orange, 0.5);
 			Sound.Update();
 		}
 
@@ -110,7 +86,6 @@ namespace Plugin
 					break;
 				case VirtualKeys.D:
 					Panel[cfg.Key2] ^= 1;
-					MessageManager.PrintMessage(cfg.Key2.ToString(), MessageColor.Orange, 5.0);
 					break;
 				case VirtualKeys.E:
 					Panel[cfg.Key3] ^= 1;
@@ -153,13 +128,13 @@ namespace Plugin
 		/// <summary>Is called when the state of the doors changes.</summary>
 		public void DoorChange(DoorStates oldState, DoorStates newState)
 		{
-			if (oldState == DoorStates.None & newState != DoorStates.None) //Door is opened
+			if (oldState == DoorStates.None & newState != DoorStates.None) /* Door is opened */
 			{
-				//safety.DoorOpened = true;
+				SafetySystem.DoorOpened = true;
 			}
-			else if (oldState != DoorStates.None & newState == DoorStates.None) //Door is closed
+			else if (oldState != DoorStates.None & newState == DoorStates.None) /* Door is closed */
 			{
-				//safety.DoorOpened = false;
+				SafetySystem.DoorOpened = false;
 			}
 		}
 		public void SetSignal(SignalData[] signal)
@@ -172,10 +147,9 @@ namespace Plugin
 		{
 			switch (beacon.Type)
 			{
-				case 12:
-					//Set speed limit
+				case 120:
 					if (beacon.Optional > 0.1) {
-						safety.SpeedLimit = beacon.Optional;
+						SafetySystem.SpeedLimit = beacon.Optional;
 					}
 					break;
 				default:

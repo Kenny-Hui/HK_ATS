@@ -6,3 +6,7 @@ E:\OpenBVE\Train Plugin\HKTrainSys\Plugin\obj\Release\Plugin.csprojAssemblyRefer
 E:\OpenBVE\Train Plugin\HKTrainSys\Plugin\obj\Release\Plugin.csproj.CoreCompileInputs.cache
 E:\OpenBVE\Train Plugin\HKTrainSys\Plugin\bin\Release\HKTrainSys.dll
 E:\OpenBVE\Train Plugin\HKTrainSys\Plugin\obj\Release\HKTrainSys.dll
+E:\OpenBVE\Train Plugin\HK_ATS\HK_ATS\Plugin\bin\Release\HK_ATS.dll
+E:\OpenBVE\Train Plugin\HK_ATS\HK_ATS\Plugin\obj\Release\Plugin.csprojAssemblyReference.cache
+E:\OpenBVE\Train Plugin\HK_ATS\HK_ATS\Plugin\obj\Release\Plugin.csproj.CoreCompileInputs.cache
+E:\OpenBVE\Train Plugin\HK_ATS\HK_ATS\Plugin\obj\Release\HK_ATS.dll
