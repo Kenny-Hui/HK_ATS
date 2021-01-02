@@ -1,0 +1,6 @@
+E:\OpenBVE\Train Plugin\TSS_LRV\Plugin\bin\Debug\Plugin.dll
+E:\OpenBVE\Train Plugin\TSS_LRV\Plugin\bin\Debug\Plugin.pdb
+E:\OpenBVE\Train Plugin\TSS_LRV\Plugin\obj\x86\Debug\Plugin.csproj.CoreCompileInputs.cache
+E:\OpenBVE\Train Plugin\TSS_LRV\Plugin\obj\x86\Debug\Plugin.dll
+E:\OpenBVE\Train Plugin\TSS_LRV\Plugin\obj\x86\Debug\Plugin.pdb
+E:\OpenBVE\Train Plugin\TSS_LRV\Plugin\obj\x86\Debug\Plugin.csprojResolveAssemblyReference.cache

@@ -1,0 +1,8 @@
+E:\OpenBVE\Train Plugin\TSS_LRV\Plugin\bin\Release\LRVSystem.dll
+E:\OpenBVE\Train Plugin\TSS_LRV\Plugin\obj\Release\Plugin.csproj.CoreCompileInputs.cache
+E:\OpenBVE\Train Plugin\TSS_LRV\Plugin\obj\Release\LRVSystem.dll
+E:\OpenBVE\Train Plugin\TSS_LRV\Plugin\obj\Release\Plugin.csprojAssemblyReference.cache
+E:\OpenBVE\Train Plugin\HKTrainSys\Plugin\obj\Release\Plugin.csprojAssemblyReference.cache
+E:\OpenBVE\Train Plugin\HKTrainSys\Plugin\obj\Release\Plugin.csproj.CoreCompileInputs.cache
+E:\OpenBVE\Train Plugin\HKTrainSys\Plugin\bin\Release\HKTrainSys.dll
+E:\OpenBVE\Train Plugin\HKTrainSys\Plugin\obj\Release\HKTrainSys.dll
