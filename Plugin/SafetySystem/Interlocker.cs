@@ -18,12 +18,16 @@ namespace Plugin {
                 /* If it's true, it means the train is approaching to a station */
                 if (StationInterlock) { /* If StationInterlock is enabled on the config file */
                     if (data.Vehicle.Speed.KilometersPerHour < 1) {
-                        if (nextStation.OpenLeftDoors) {
-                            data.DoorInterlockState = DoorInterlockStates.Left;
-                        } else if (nextStation.OpenRightDoors) {
-                            data.DoorInterlockState = DoorInterlockStates.Right;
+                        if (nextStation.OpenLeftDoors && nextStation.OpenRightDoors) {
+                            data.DoorInterlockState = DoorInterlockStates.Unlocked;
                         } else {
-                            data.DoorInterlockState = DoorInterlockStates.Locked;
+                            if (nextStation.OpenLeftDoors) {
+                                data.DoorInterlockState = DoorInterlockStates.Left;
+                            } else if (nextStation.OpenRightDoors) {
+                                data.DoorInterlockState = DoorInterlockStates.Right;
+                            } else {
+                                data.DoorInterlockState = DoorInterlockStates.Locked;
+                            }
                         }
                     } else {
                         data.DoorInterlockState = DoorInterlockStates.Locked;
