@@ -84,9 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenBveApi">
-      <HintPath>..\..\..\..\OpenBVE\OpenBVE-1.7.1.8\OpenBveApi.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\OpenBVE\OpenBVE-Nightly\OpenBveApi.dll</HintPath>
     </Reference>
-    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
 </Project>

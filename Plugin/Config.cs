@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Forms;
 using OpenBveApi.Runtime;
 
 namespace Plugin {
@@ -31,6 +30,7 @@ namespace Plugin {
                         currentSection = line.Trim().Substring(1, line.Length - 2).ToLowerInvariant();
                     } else {
                         string[] cfg = line.Split('=');
+                        if (!(cfg.Length < 2)) {
                         string key = cfg[0].Trim();
                         string valstr = cfg[1].Trim();
                         int val;
@@ -169,6 +169,7 @@ namespace Plugin {
                                 break;
                         }
                     }
+                }
                 }
             }
         }
