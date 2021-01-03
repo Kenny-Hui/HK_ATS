@@ -10,12 +10,10 @@ namespace Plugin
 		public int PowerNotch;
 		public int BrakeNotch;
 		public int B67Notch;
-		Config cfg = new Config();
-		Interlocker interlock = new Interlocker();
 		/// <summary>Is called when the plugin is loaded.</summary>
 		public bool Load(LoadProperties properties) {
 			MessageManager.Initialise(properties.AddMessage);
-			cfg.Load(properties);
+			Config.Load(properties);
 			Panel = new int[256];
 			Sound = new SoundHelper(properties.PlaySound, 256);
 			properties.Panel = Panel;
@@ -29,7 +27,7 @@ namespace Plugin
 
 		/// <summary>Is called after loading to inform the plugin about the specifications of the train.</summary>
 		public void SetVehicleSpecs(VehicleSpecs specs) {
-			interlock.B67Notch = specs.B67Notch;
+			Interlocker.B67Notch = specs.B67Notch;
 		}
 
 		/// <summary>Is called when the plugin should initialize, reinitialize or jumping stations.</summary>
@@ -38,8 +36,13 @@ namespace Plugin
 
 		/// <summary>Is called every frame.</summary>
 		public void Elapse(ElapseData data) {
-			interlock.update(data);
+			Interlocker.update(data);
 			SafetySystem.update(data);
+			if (SafetySystem.SpeedLimit != 1 && data.Vehicle.Speed.KilometersPerHour > SafetySystem.SpeedLimit) {
+                Panel[panel.Overspd] = 1;
+			} else {
+				Panel[panel.Overspd] = 0;
+			}
 			//MessageManager.PrintMessage(Interlocker.StationInterlock.ToString(), MessageColor.Orange, 0.5);
 			Sound.Update();
 		}
@@ -62,52 +65,52 @@ namespace Plugin
 			VirtualKeys virtualKey = key;
 			switch (virtualKey) {
 				case VirtualKeys.S:
-					Panel[cfg.KeySpace] ^= 1;
+                    Panel[panel.KeySpace] ^= 1;
 					break;
 				case VirtualKeys.A1:
-					Panel[cfg.KeyIns] ^= 1;
+                    Panel[panel.KeyIns] ^= 1;
 					break;
 				case VirtualKeys.A2:
-					Panel[cfg.KeyDel] ^= 1;
+                    Panel[panel.KeyDel] ^= 1;
 					break;
 				case VirtualKeys.B1:
-					Panel[cfg.KeyHome] ^= 1;
+                    Panel[panel.KeyHome] ^= 1;
 					break;
 				case VirtualKeys.B2:
-					Panel[cfg.KeyEnd] ^= 1;
+                    Panel[panel.KeyEnd] ^= 1;
 					break;
 				case VirtualKeys.C1:
-					Panel[cfg.KeyPgUp] ^= 1;
+                    Panel[panel.KeyPgUp] ^= 1;
 					break;
 				case VirtualKeys.C2:
-					Panel[cfg.KeyPgDn] ^= 1;
+                    Panel[panel.KeyPgDn] ^= 1;
 					break;
 				case VirtualKeys.D:
-					Panel[cfg.Key2] ^= 1;
+                    Panel[panel.Key2] ^= 1;
 					break;
 				case VirtualKeys.E:
-					Panel[cfg.Key3] ^= 1;
+                    Panel[panel.Key3] ^= 1;
 					break;
 				case VirtualKeys.F:
-					Panel[cfg.Key4] ^= 1;
+                    Panel[panel.Key4] ^= 1;
 					break;
 				case VirtualKeys.G:
-					Panel[cfg.Key5] ^= 1;
+                    Panel[panel.Key5] ^= 1;
 					break;
 				case VirtualKeys.H:
-					Panel[cfg.Key6] ^= 1;
+                    Panel[panel.Key6] ^= 1;
 					break;
 				case VirtualKeys.I:
-					Panel[cfg.Key7] ^= 1;
+                    Panel[panel.Key7] ^= 1;
 					break;
 				case VirtualKeys.J:
-					Panel[cfg.Key8] ^= 1;
+                    Panel[panel.Key8] ^= 1;
 					break;
 				case VirtualKeys.K:
-					Panel[cfg.Key9] ^= 1;
+                    Panel[panel.Key9] ^= 1;
 					break;
 				case VirtualKeys.L:
-					Panel[cfg.Key0] ^= 1;
+                    Panel[panel.Key0] ^= 1;
 					break;
 				default:
 					break;

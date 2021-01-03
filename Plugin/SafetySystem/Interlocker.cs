@@ -1,14 +1,14 @@
 ﻿using OpenBveApi.Runtime;
 
 namespace Plugin {
-    class Interlocker {
-        public bool DoorInterlocked = false;
-        public bool DoorBrake = true;
-        public static bool StationInterlock { get; set; }  
-        private int p;
-        public Station nextStation;
-        public int B67Notch { get; set; }
-        public void update(ElapseData data) {
+    static class Interlocker {
+        internal static bool DoorInterlocked = false;
+        internal static bool DoorBrake = true;
+        internal static bool StationInterlock { get; set; }  
+        private static int p;
+        internal static Station nextStation;
+        internal static int B67Notch { get; set; }
+        internal static void update(ElapseData data) {
             /* Hacky way to determine the next station */
             while (p < data.Stations.Count - 1 && data.Stations[p].StopPosition + 5 < data.Vehicle.Location) p++;
             while (p > 1 && data.Stations[p - 1].StopPosition + 5 > data.Vehicle.Location) p--;

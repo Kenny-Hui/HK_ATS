@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Config.cs" />
     <Compile Include="MessageManager.cs" />
+    <Compile Include="panel.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Plugin.Sound.cs">
       <DependentUpon>Plugin.cs</DependentUpon>
@@ -85,6 +86,7 @@
   <ItemGroup>
     <Reference Include="OpenBveApi">
       <HintPath>..\..\..\OpenBVE\OpenBVE-Nightly\OpenBveApi.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
 </Project>
