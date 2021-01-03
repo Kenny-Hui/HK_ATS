@@ -29,8 +29,6 @@ namespace Plugin
 
 		/// <summary>Is called after loading to inform the plugin about the specifications of the train.</summary>
 		public void SetVehicleSpecs(VehicleSpecs specs) {
-			SafetySystem.PowerNotch = specs.PowerNotches;
-			SafetySystem.BrakeNotch = specs.BrakeNotches;
 			interlock.B67Notch = specs.B67Notch;
 		}
 
@@ -42,7 +40,7 @@ namespace Plugin
 		public void Elapse(ElapseData data) {
 			interlock.update(data);
 			SafetySystem.update(data);
-			MessageManager.PrintMessage(Interlocker.StationInterlock.ToString(), MessageColor.Orange, 0.5);
+			//MessageManager.PrintMessage(Interlocker.StationInterlock.ToString(), MessageColor.Orange, 0.5);
 			Sound.Update();
 		}
 

@@ -10,8 +10,8 @@ namespace Plugin {
         public int B67Notch { get; set; }
         public void update(ElapseData data) {
             /* Hacky way to determine the next station */
-            while (p < data.Stations.Count - 1 && data.Stations[p].StopPosition < data.Vehicle.Location) p++;
-            while (p > 1 && data.Stations[p - 1].StopPosition > data.Vehicle.Location) p--;
+            while (p < data.Stations.Count - 1 && data.Stations[p].StopPosition + 5 < data.Vehicle.Location) p++;
+            while (p > 1 && data.Stations[p - 1].StopPosition + 5 > data.Vehicle.Location) p--;
             nextStation = data.Stations[p];
 
             if (data.Vehicle.Location > nextStation.DefaultTrackPosition && data.Vehicle.Location < (nextStation.StopPosition + 5)) {

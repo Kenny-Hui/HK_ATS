@@ -128,7 +128,16 @@ namespace Plugin {
                                             SafetySystem.SpeedLimit = val;
                                         }
                                         break;
-                                    default:
+                                        case "limitspeed":
+                                            if (int.TryParse(valstr, out val)) {
+                                                if (val == 1) {
+                                                    SafetySystem.LimitSpeed = true;
+                                                } else {
+                                                    SafetySystem.LimitSpeed = false;
+                                                }
+                                            }
+                                            break;
+                                        default:
                                         break;
                                 }
                                 break;
