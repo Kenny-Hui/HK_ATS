@@ -8,7 +8,7 @@ namespace Plugin {
             string cfgfile = System.IO.Path.Combine(prop.PluginFolder, "hkconfig.cfg");
             string[] lines = System.IO.File.ReadAllLines(cfgfile);
             foreach (string line in lines) {
-                if (!line.StartsWith("/")) { /* Slash is our comment identifier, ignore the line if it starts with slash */
+                if (!line.StartsWith(";")) { /* Semicolon is our comment identifier, ignore the line if it starts with semicolon */
                     if (line.StartsWith("[")) {
                         currentSection = line.Trim().Substring(1, line.Length - 2).ToLowerInvariant();
                     } else {
@@ -118,11 +118,7 @@ namespace Plugin {
                                         break;
                                         case "limitspeed":
                                             if (int.TryParse(valstr, out val)) {
-                                                if (val == 1) {
-                                                    SafetySystem.LimitSpeed = true;
-                                                } else {
-                                                    SafetySystem.LimitSpeed = false;
-                                                }
+                                               SafetySystem.LimitSpeed = val;
                                             }
                                             break;
                                         default:
@@ -140,7 +136,7 @@ namespace Plugin {
                                             }
                                         }
                                         break;
-                                    case "doorapplybrake":
+                                    case "doorpowerlock":
                                         if (int.TryParse(valstr, out val)) {
                                             if (val == 1) {
                                                 Interlocker.DoorBrake = true;

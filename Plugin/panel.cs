@@ -19,5 +19,6 @@ namespace Plugin {
         internal static int KeyPgDn { get; set; }
         internal static int KeySpace { get; set; }
         internal static int Overspd { get; set; }
+        internal static int OvrspdEMBrake { get; set; }
     }
 }

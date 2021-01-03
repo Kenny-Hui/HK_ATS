@@ -7,9 +7,6 @@ namespace Plugin
 	public partial class Plugin : IRuntime {
 
 		private int[] Panel = null;
-		public int PowerNotch;
-		public int BrakeNotch;
-		public int B67Notch;
 		/// <summary>Is called when the plugin is loaded.</summary>
 		public bool Load(LoadProperties properties) {
 			MessageManager.Initialise(properties.AddMessage);
@@ -27,6 +24,7 @@ namespace Plugin
 
 		/// <summary>Is called after loading to inform the plugin about the specifications of the train.</summary>
 		public void SetVehicleSpecs(VehicleSpecs specs) {
+			SafetySystem.BrakeNotches = specs.BrakeNotches;
 			Interlocker.B67Notch = specs.B67Notch;
 		}
 
@@ -38,12 +36,18 @@ namespace Plugin
 		public void Elapse(ElapseData data) {
 			Interlocker.update(data);
 			SafetySystem.update(data);
+
 			if (SafetySystem.SpeedLimit != 1 && data.Vehicle.Speed.KilometersPerHour > SafetySystem.SpeedLimit) {
                 Panel[panel.Overspd] = 1;
 			} else {
 				Panel[panel.Overspd] = 0;
 			}
-			//MessageManager.PrintMessage(Interlocker.StationInterlock.ToString(), MessageColor.Orange, 0.5);
+
+			if (SafetySystem.OverspeedApplyBrake) {
+				Panel[panel.OvrspdEMBrake] = 1;
+			} else {
+				Panel[panel.OvrspdEMBrake] = 0;
+			}
 			Sound.Update();
 		}
 
