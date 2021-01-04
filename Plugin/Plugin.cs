@@ -1,5 +1,4 @@
 ﻿using OpenBveApi.Runtime;
-using OpenBveApi.Colors;
 
 namespace Plugin
 {
@@ -10,6 +9,7 @@ namespace Plugin
 		/// <summary>Is called when the plugin is loaded.</summary>
 		public bool Load(LoadProperties properties) {
 			MessageManager.Initialise(properties.AddMessage);
+			SoundManager.Initialise(properties.PlaySound, 256);
 			Config.Load(properties);
 			Panel = new int[256];
 			Sound = new SoundHelper(properties.PlaySound, 256);
@@ -36,18 +36,7 @@ namespace Plugin
 		public void Elapse(ElapseData data) {
 			Interlocker.update(data);
 			SafetySystem.update(data);
-
-			if (SafetySystem.SpeedLimit != 1 && data.Vehicle.Speed.KilometersPerHour > SafetySystem.SpeedLimit) {
-                Panel[panel.Overspd] = 1;
-			} else {
-				Panel[panel.Overspd] = 0;
-			}
-
-			if (SafetySystem.OverspeedApplyBrake) {
-				Panel[panel.OvrspdEMBrake] = 1;
-			} else {
-				Panel[panel.OvrspdEMBrake] = 0;
-			}
+			PanelManager.update(data, Panel);
 			Sound.Update();
 		}
 
@@ -66,59 +55,7 @@ namespace Plugin
 		/// <summary>Is called when a virtual key is pressed.</summary>
 		public void KeyDown(VirtualKeys key)
 		{
-			VirtualKeys virtualKey = key;
-			switch (virtualKey) {
-				case VirtualKeys.S:
-                    Panel[panel.KeySpace] ^= 1;
-					break;
-				case VirtualKeys.A1:
-                    Panel[panel.KeyIns] ^= 1;
-					break;
-				case VirtualKeys.A2:
-                    Panel[panel.KeyDel] ^= 1;
-					break;
-				case VirtualKeys.B1:
-                    Panel[panel.KeyHome] ^= 1;
-					break;
-				case VirtualKeys.B2:
-                    Panel[panel.KeyEnd] ^= 1;
-					break;
-				case VirtualKeys.C1:
-                    Panel[panel.KeyPgUp] ^= 1;
-					break;
-				case VirtualKeys.C2:
-                    Panel[panel.KeyPgDn] ^= 1;
-					break;
-				case VirtualKeys.D:
-                    Panel[panel.Key2] ^= 1;
-					break;
-				case VirtualKeys.E:
-                    Panel[panel.Key3] ^= 1;
-					break;
-				case VirtualKeys.F:
-                    Panel[panel.Key4] ^= 1;
-					break;
-				case VirtualKeys.G:
-                    Panel[panel.Key5] ^= 1;
-					break;
-				case VirtualKeys.H:
-                    Panel[panel.Key6] ^= 1;
-					break;
-				case VirtualKeys.I:
-                    Panel[panel.Key7] ^= 1;
-					break;
-				case VirtualKeys.J:
-                    Panel[panel.Key8] ^= 1;
-					break;
-				case VirtualKeys.K:
-                    Panel[panel.Key9] ^= 1;
-					break;
-				case VirtualKeys.L:
-                    Panel[panel.Key0] ^= 1;
-					break;
-				default:
-					break;
-			}
+			KeyManager.KeyDown(key, Panel);
 		}
 
 		/// <summary>Is called when a virtual key is released.</summary>

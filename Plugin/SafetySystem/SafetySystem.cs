@@ -6,6 +6,9 @@ namespace Plugin {
         internal static bool DoorOpened { get; set; }
         internal static bool OverspeedApplyBrake = false;
         internal static int BrakeNotches { get; set; }
+        //internal static int IdleTimer { get; set; }
+        //internal static int IdleTimerTimeout { get; set; }
+        //internal static int IdleTimerExceeded { get; set; }
 
         internal static void update(ElapseData data) {
             if (SpeedLimit != -1 && data.Vehicle.Speed.KilometersPerHour > SpeedLimit) {
@@ -24,6 +27,8 @@ namespace Plugin {
                     OverspeedApplyBrake = false;
                 }
             }
+
+            //IdleTimer = IdleTimer + (int) data.ElapsedTime.Milliseconds;
         }
     }
 }

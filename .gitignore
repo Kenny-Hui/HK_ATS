@@ -4,4 +4,4 @@ Plugin/bin/Release/
 .vs/
 *.cache
 *.CopyComplete
-Plugin/obj/Release/
+Plugin/obj/
