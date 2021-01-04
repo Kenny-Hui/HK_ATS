@@ -18,6 +18,8 @@ namespace Plugin {
         internal static int KeyPgUp { get; set; }
         internal static int KeyPgDn { get; set; }
         internal static int KeySpace { get; set; }
+        internal static int DSDTimerExceeded { get; set; }
+        internal static int DSDTimerBrake { get; set; }
 
         internal static void PlayOnce(VirtualKeys key) {
             VirtualKeys virtualKey = key;

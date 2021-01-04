@@ -22,7 +22,7 @@ namespace Plugin {
         internal static int Overspd { get; set; }
         internal static int OvrspdEMBrake { get; set; }
         internal static int SpeedLimit { get; set; }
-        //internal static int IdleTimer { get; set; }
+        internal static int IdleTimer { get; set; }
 
         internal static void update(ElapseData data, int[] Panel) {
             if (SafetySystem.SpeedLimit != 1 && data.Vehicle.Speed.KilometersPerHour > SafetySystem.SpeedLimit) {
@@ -37,9 +37,11 @@ namespace Plugin {
             }
             Panel[SpeedLimit] = (int) data.Vehicle.Speed.KilometersPerHour;
 
-            /*if (SafetySystem.IdleTimer != 0 && SafetySystem.IdleTimer > SafetySystem.IdleTimerTimeout) {
+            if (DSD.DSDTimerTimeout != 0 && DSD.DSDTimer > DSD.DSDTimerTimeout) {
                 Panel[IdleTimer] = 1;
-            }*/
+            } else {
+                Panel[IdleTimer] = 0;
+            }
         }
 
         internal static void KeyDown(VirtualKeys key, int[] Panel) {

@@ -18,10 +18,9 @@ namespace Plugin {
                             string valstr = cfg[1].Trim();
                             int val;
                             switch (currentSection) {
-                                case "atskey":
+                                case "indicator":
                                     switch (key) {
                                         case "key2":
-
                                             if (int.TryParse(valstr, out val)) {
                                                 PanelManager.Key2 = val;
                                             }
@@ -111,6 +110,11 @@ namespace Plugin {
                                                 PanelManager.SpeedLimit = Convert.ToInt32(val);
                                             }
                                             break;
+                                        case "idletimerexceed":
+                                            if (int.TryParse(valstr, out val)) {
+                                                PanelManager.IdleTimer = Convert.ToInt32(val);
+                                            }
+                                            break;
                                         default:
                                             break;
                                     }
@@ -157,6 +161,97 @@ namespace Plugin {
                                                     Interlocker.StationInterlock = true;
                                                 } else {
                                                     Interlocker.StationInterlock = false;
+                                                }
+                                            }
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    break;
+                                case "dsdtimer":
+                                    switch (key) {
+                                        case "resettimerkey":
+                                            switch (valstr) {
+                                                case "keyspace":
+                                                    DSD.rsettimerkey = VirtualKeys.S;
+                                                    break;
+                                                case "keyins":
+                                                    DSD.rsettimerkey = VirtualKeys.A1;
+                                                    break;
+                                                case "keydel":
+                                                    DSD.rsettimerkey = VirtualKeys.A2;
+                                                    break;
+                                                case "keyhome":
+                                                    DSD.rsettimerkey = VirtualKeys.B1;
+                                                    break;
+                                                case "keyend":
+                                                    DSD.rsettimerkey = VirtualKeys.B2;
+                                                    break;
+                                                case "keypgup":
+                                                    DSD.rsettimerkey = VirtualKeys.C1;
+                                                    break;
+                                                case "keypgdn":
+                                                    DSD.rsettimerkey = VirtualKeys.C2;
+                                                    break;
+                                                case "key2":
+                                                    DSD.rsettimerkey = VirtualKeys.D;
+                                                    break;
+                                                case "key3":
+                                                    DSD.rsettimerkey = VirtualKeys.E;
+                                                    break;
+                                                case "key4":
+                                                    DSD.rsettimerkey = VirtualKeys.F;
+                                                    break;
+                                                case "key5":
+                                                    DSD.rsettimerkey = VirtualKeys.G;
+                                                    break;
+                                                case "key6":
+                                                    DSD.rsettimerkey = VirtualKeys.H;
+                                                    break;
+                                                case "key7":
+                                                    DSD.rsettimerkey = VirtualKeys.I;
+                                                    break;
+                                                case "key8":
+                                                    DSD.rsettimerkey = VirtualKeys.J;
+                                                    break;
+                                                case "key9":
+                                                    DSD.rsettimerkey = VirtualKeys.K;
+                                                    break;
+                                                case "key0":
+                                                    DSD.rsettimerkey = VirtualKeys.L;
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
+                                            break;
+                                        case "dsdtimerlimit":
+                                            if (int.TryParse(valstr, out val)) {
+                                                DSD.DSDTimerTimeout = val;
+                                            }
+                                            break;
+                                        case "dsdtimerbrake":
+                                            if (int.TryParse(valstr, out val)) {
+                                                DSD.DSDTimerBrakeTimeout = DSD.DSDTimerTimeout + val;
+                                            }
+                                            break;
+                                        case "disableontrainstop":
+                                            if (int.TryParse(valstr, out val)) {
+                                                if (val == 1) {
+                                                    DSD.DSDDisableOnTrainStop = true;
+                                                }
+                                            }
+                                            break;
+                                        case "resetondoormove":
+                                            if (int.TryParse(valstr, out val)) {
+                                                if (val == 1) {
+                                                    DSD.ResetOnDoorMove = true;
+                                                }
+                                            }
+                                            break;
+                                        case "resetonnotchmove":
+                                            if (int.TryParse(valstr, out val)) {
+                                                if (val == 1) {
+                                                    DSD.ResetOnNotchMove = true;
                                                 }
                                             }
                                             break;
@@ -239,6 +334,16 @@ namespace Plugin {
                                         case "keypgdn":
                                             if (int.TryParse(valstr, out val)) {
                                                 ATSSoundManager.KeyPgDn = val;
+                                            }
+                                            break;
+                                        case "dsdtimerexceeded":
+                                            if (int.TryParse(valstr, out val)) {
+                                                ATSSoundManager.DSDTimerExceeded = val;
+                                            }
+                                            break;
+                                        case "dsdtimerbrake":
+                                            if (int.TryParse(valstr, out val)) {
+                                                ATSSoundManager.DSDTimerBrake = val;
                                             }
                                             break;
                                         default:
