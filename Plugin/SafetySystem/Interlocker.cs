@@ -9,7 +9,7 @@ namespace Plugin {
         internal static Station nextStation;
         internal static int B67Notch { get; set; }
         internal static void update(ElapseData data) {
-            /* Hacky way to determine the next station */
+            /* Determine the next station */
             while (p < data.Stations.Count - 1 && data.Stations[p].StopPosition + 5 < data.Vehicle.Location) p++;
             while (p > 1 && data.Stations[p - 1].StopPosition + 5 > data.Vehicle.Location) p--;
             nextStation = data.Stations[p];

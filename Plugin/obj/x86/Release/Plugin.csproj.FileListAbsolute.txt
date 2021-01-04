@@ -1,4 +1,0 @@
-E:\OpenBVE\Train Plugin\TSS_LRV\Plugin\bin\Release\LRVSystem.dll
-E:\OpenBVE\Train Plugin\TSS_LRV\Plugin\obj\x86\Release\Plugin.csprojAssemblyReference.cache
-E:\OpenBVE\Train Plugin\TSS_LRV\Plugin\obj\x86\Release\Plugin.csproj.CoreCompileInputs.cache
-E:\OpenBVE\Train Plugin\TSS_LRV\Plugin\obj\x86\Release\LRVSystem.dll
