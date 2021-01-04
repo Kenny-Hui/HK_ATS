@@ -1,14 +1,14 @@
 # HK ATS
 ## Introduction
 HK_ATS is a train plugin made for Hong Kong trains in the train simulator <a href="https://github.com/leezer3/OpenBVE">OpenBVE</a>  
-Still learning C#, any help would be apperciated :P  
+Still learning C#, any help would be apperciated  
 ## Usage
-**1.** Create a file called hkconfig.cfg on the folder where you store your plugin  
-**2.** Follow the config template below  
+**1.** Create a file called hkconfig.cfg on the folder where the plugin is stored  
+**2.** It is recommended to follow the template below  
 ```
-; Plugin security key, i in keyi represents the top number row on your keyboard (With default key assignment)
-; Format: key = Pluginstate
-[atskey]
+; Panel indicator, i in keyi represents the key on the top number row of your keyboard (Default key assignment)
+; Format: function = Pluginstate
+[indicator]
 key2 = 105
 key3 = 106
 key4 = 107
@@ -19,14 +19,36 @@ key8 = 99
 key9 = 100
 key0 = 251
 overspeed = 201
+idletimerexceed = 100
 
 [system]
+; Define the speed limit, 0 to disable
 speedlimit = 45
+
 ; Whether to stop the train from accelerating beyond the speedlimit
 ; 0 = No action will be taken
 ; 1 = Set Power Notch to 0
-; 2 = Apply emergency brake until the train fully stops
+; 2 = Apply emergency brake after exceeding speed limit until the train fully stops
 limitspeed = 2
+
+[dsdtimer]
+; Key to reset the Idle Timer
+resettimerkey = key0
+
+; Time before exceeding the DSD time limit (in second)
+dsdtimerlimit = 20
+
+; Second before applying brake after exceeding the DSD time limit (0 to disable brake action)
+dsdtimerbrake = 5
+
+; Whether to disable DSD when the train is stopped (1 to disable DSD on train stop)
+disableontrainstop = 1
+
+; Whether to reset the timer when a door opened (1 to reset the timer when door opened)
+resetondoormove = 1
+
+; Whether to reset the timer when driver switch to another notch, or if another reverser is set (1 to reset the timer)
+resetonnotchmove = 1
 
 [interlock]
 ; Lock the door when the train is moving
@@ -43,6 +65,12 @@ doorpowerlock = 1
 ; 0 = door are always unlocked
 ; 1 = door are locked on the side that isn't a station platform
 station = 1
+
+[sound]
+key2 = 221
+key3 = 221
+dsdtimerexceeded = 224
+dsdtimerbrake = 219
 ```
 
 ## Section
