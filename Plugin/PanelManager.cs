@@ -23,8 +23,14 @@ namespace Plugin {
         internal static int OvrspdEMBrake { get; set; }
         internal static int SpeedLimit { get; set; }
         internal static int IdleTimer { get; set; }
+        internal static int[] Beacon = new int[512];
+        internal static int Pendingbeacon;
 
         internal static void update(ElapseData data, int[] Panel) {
+            if (Pendingbeacon != 0) {
+                Panel[Beacon[Pendingbeacon]] = 1;
+            }
+
             if (SafetySystem.SpeedLimit != 1 && data.Vehicle.Speed.KilometersPerHour > SafetySystem.SpeedLimit) {
                 Panel[Overspd] = 1;
             } else {
@@ -42,6 +48,10 @@ namespace Plugin {
             } else {
                 Panel[IdleTimer] = 0;
             }
+        }
+
+        internal static void OnBeacon (int beaconNum){
+            Pendingbeacon = beaconNum;
         }
 
         internal static void KeyDown(VirtualKeys key, int[] Panel) {

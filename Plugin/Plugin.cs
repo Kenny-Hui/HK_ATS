@@ -83,6 +83,7 @@ namespace Plugin {
         /// <summary>Is called when the train passes a beacon.</summary>
         /// <param name="beacon">The beacon data.</param>
         public void SetBeacon(BeaconData beacon) {
+            BeaconManager.ProcessBeacon(beacon);
             switch (beacon.Type) {
                 case 120:
                     if (beacon.Optional > 0.1) {

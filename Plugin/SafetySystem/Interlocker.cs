@@ -3,6 +3,7 @@
 namespace Plugin {
     static class Interlocker {
         internal static bool DoorInterlocked = false;
+        internal static bool DoorPowerLock = true;
         internal static bool DoorBrake = true;
         internal static bool StationInterlock { get; set; }  
         private static int p;
@@ -46,8 +47,10 @@ namespace Plugin {
             }
 
             if (SafetySystem.DoorOpened && DoorBrake) {
-                data.Handles.PowerNotch = 0;
                 data.Handles.BrakeNotch = B67Notch;
+            }
+            if (SafetySystem.DoorOpened && DoorPowerLock) {
+                data.Handles.PowerNotch = 0;
             }
         }
     }

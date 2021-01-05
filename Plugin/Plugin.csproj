@@ -73,6 +73,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
     <Compile Include="ATSSoundManager.cs" />
+    <Compile Include="BeaconManager.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="MessageManager.cs" />
     <Compile Include="PanelManager.cs" />
@@ -91,5 +92,6 @@
       <HintPath>..\..\..\OpenBVE\OpenBVE-Nightly\OpenBveApi.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
 </Project>
