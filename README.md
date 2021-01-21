@@ -1,14 +1,17 @@
 # HK ATS
 ## Introduction
-HK_ATS is a train plugin made for Hong Kong trains in the train simulator <a href="https://github.com/leezer3/OpenBVE">OpenBVE</a>  
-Still learning C#, any help would be apperciated  
+HK_ATS is a train plugin made for Hong Kong trains in the train simulator <a href="https://github.com/leezer3/OpenBVE">OpenBVE</a>.  
+The goal is to create an universal train plugin that is highly customizable, and can be used across all Hong Kong trains.  
+Safety System in this plugin is rather simple, and it's intended to make sure newer player can enjoy the driving experience without too much hassle.  
+Still new to C#, any help would be apperciated!  
 ## Usage
-**1.** Create a file called hkconfig.cfg on the folder where the plugin is stored  
-**2.** It is recommended to follow the template below  
+Create a file called hkats.ini on the folder where the plugin is stored.  
+It is recommended to follow the template below  
 ```
-; Panel indicator, i in keyi represents the key on the top number row of your keyboard (Default key assignment)
-; Format: function = Pluginstate
-[indicator]
+; Security Keydown event, i in keyi represents the key on the top number row of your keyboard (Default key assignment)
+; Format: keyi = PluginIndex, SoundIndex
+; SoundIndex could be optional, but PluginIndex must be filled
+[keydown]
 key2 = 105
 key3 = 106
 key4 = 107
@@ -22,8 +25,11 @@ overspeed = 201
 idletimerexceed = 100
 
 [system]
+; Panel Indicator on overspeed and Vigilance Timeout
+overspeedPanel = 201
+idletimerexceedPanel = 100
 ; Define the speed limit, 0 to disable
-speedlimit = 45
+speedlimit = 55
 
 ; Whether to stop the train from accelerating beyond the speedlimit
 ; 0 = No action will be taken
@@ -67,23 +73,27 @@ doorpowerlock = 1
 station = 1
 
 [sound]
-key2 = 221
-key3 = 221
 dsdtimerexceeded = 224
 dsdtimerbrake = 219
+
+; Format: beaconi/speedlimit = PluginIndex, SoundIndex
+[beacon]
+speedlimit = 12
+beacon13 = 99,222
 ```
 
 ## Section
-### [indicator]
-Panel indicator, i in keyi represents the key on the top number row of your keyboard (Default key assignment)
-Format: function = Pluginstate
+### [keydown]
+When a key is pressed, i in keyi represents the key on the top number row of your keyboard (Default key assignment)  
+Format: function = PanelIndex, SoundIndex  
 
 #### Example:
 ```
-[indicator]
-; When the "2" ley is pressed on the keyboard, trigger PluginIndicator 105
+[keydown]
+; When the "2" key is pressed on the keyboard, trigger PluginIndicator 105
+; When the "3" key is pressed on the keyboard, trigger PluginIndicator 106 and play sound index 27 defined in sound.cfg
 key2 = 105
-key3 = 106
+key3 = 106, 27
 keyspace = 107
 overspeed = 201
 idletimerexceed = 100
@@ -106,18 +116,25 @@ doorpowerlock = 0
 station = 1
 ```
 ### [system]
-The system section defines different security system.  
-**speedlimit** - define the speedlimit in km/h, -1 means theres no speed limit  
+The system section defines different security system.    
+**overspeedPanel** - PanelIndicator to activate when overspeeding  
+**idletimerexceedPanel** PanelIndicator to activate when the timer exceeds the vigilance device's time limit  
+**speedlimit** - define the speedlimit in km/h, -1 for no speed limit  
 **limitspeed** - Whether to stop the train from accelerating beyond the speedlimit  
 0 = No action will be taken  
-1 = Set Power Notch to 0  
+1 = Cut off power 
 2 = Apply emergency brake until the train fully stops
 
 #### Example:
 ```
 [system]  
+; Panel Indicator on overspeed and Vigilance Timeout
+overspeedPanel = 201
+idletimerexceedPanel = 100
+
 ; Speedlimit is 70 km/h
 speedlimit = 70
+
 ; Apply EMG brake until the train fully stops, if the train exceeded 70 km/h
 limitspeed = 2
 ```
@@ -148,8 +165,24 @@ resetondoormove = 1
 resetonnotchmove = 1
 ```
 
+### [beacon]
+Events when a train traveled pass a beacon. i in beaconi represents the beacon type.  
+Type and Data in CSV route command: Track.Beacon **Type**; BeaconStructureIndex; Section; **Data**  
+**speedlimit** - Define the speedlimit  
+**beaconi** - Custom beacon, can be used to activate PanelIndex and SoundIndex  
+
+#### Example:
+```
+[beacon]  
+; When the train passes beacon 124, adjust the speed limit according to the data provided.
+speedlimit = 124
+; When the train passes beacon 125, triggers PluginIndex 150 and play soundIndex 102
+beacon125 = 150, 102
+```
+
 ## Note
 **1.** Lines that does not start with semicolon (';'), square bracket ('[]') or if the line does not have an equality sign (=) will be ignored.  
-**2.** This plugin is in WIP, more feature will be added soon. (And you can also suggest one on the issue tab if you want)  
-**3.** Prebuilt binary will not be provided for now, contact Lubuntu#2271 on discord if you need the compiled plugin  
-**4.** This plugin is built on VS2019 targetting .NET Framework 4.6.1  
+**2.** This plugin is still work in progress, README and documentation can be changed without being notified  
+**3.** Prebuilt binary will not be provided for now, contact LX86#2271 on discord if you need the compiled plugin  
+**4.** This plugin is built on Visual Studio 2019 targetting .NET Framework 4.6.1  
+**5.** While this plugin is made for HK Trains, you can still use it if you think the feature is applicable to your train  

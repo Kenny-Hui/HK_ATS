@@ -4,14 +4,15 @@ using OpenBveApi.Runtime;
 
 namespace Plugin {
     internal static class Config {
-        static string currentSection;
+        internal static string currentSection;
+        internal static int[] Keys = new int[38];
         internal static void Load(LoadProperties prop) {
-            string cfgfile = Path.Combine(prop.PluginFolder, "hkconfig.cfg");
+            string cfgfile = Path.Combine(prop.PluginFolder, "hkats.ini");
             if (File.Exists(cfgfile)) {
                 string[] lines = File.ReadAllLines(cfgfile);
                 foreach (string line in lines) {
                     if (!line.StartsWith(";")) { /* Semicolon is our comment identifier, ignore the line if it starts with semicolon */
-                        if (line.StartsWith("[")) { /* square bracket is our section identifier, set the currentSection to the section name without the bracket */
+                        if (line.StartsWith("[")) { /* Square bracket is our section identifier, set the currentSection to the section name without the bracket */
                             currentSection = line.Trim().Substring(1, line.Length - 2).ToLowerInvariant();
                         } else {
                             string[] cfg = line.Split('=');
@@ -19,110 +20,73 @@ namespace Plugin {
                                 string key = cfg[0].Trim().ToLowerInvariant();
                                 string valstr = cfg[1].Trim().ToLowerInvariant();
                                 int val;
+                                string[] seperated = valstr.Split(',');
                                 switch (currentSection) {
-                                    case "indicator":
-                                        if (key.StartsWith("beacon")) {
-                                            if (int.TryParse(valstr, out val)) {
-                                                if (int.TryParse(key.Substring(6), out int beaconNum)) {
-                                                    BeaconManager.RegisterPanelBeacon(beaconNum, val);
-                                                }
-                                            }
-                                        }
+                                    case "keydown":
                                         switch (key) {
                                             case "key2":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    PanelManager.Key2 = val;
-                                                }
+                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[2] = val;
+                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[2] = val;
                                                 break;
                                             case "key3":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    PanelManager.Key3 = Convert.ToInt32(val);
-                                                }
+                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[3] = val;
+                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[3] = val;
                                                 break;
                                             case "key4":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    PanelManager.Key4 = Convert.ToInt32(val);
-                                                }
+                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[4] = val;
+                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[4] = val;
                                                 break;
                                             case "key5":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    PanelManager.Key5 = Convert.ToInt32(val);
-                                                }
+                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[5] = val;
+                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[5] = val;
                                                 break;
                                             case "key6":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    PanelManager.Key6 = Convert.ToInt32(val);
-                                                }
+                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[6] = val;
+                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[6] = val;
                                                 break;
                                             case "key7":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    PanelManager.Key7 = Convert.ToInt32(val);
-                                                }
+                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[7] = val;
+                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[7] = val;
                                                 break;
                                             case "key8":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    PanelManager.Key8 = Convert.ToInt32(val);
-                                                }
+                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[8] = val;
+                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[8] = val;
                                                 break;
                                             case "key9":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    PanelManager.Key9 = Convert.ToInt32(val);
-                                                }
+                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[9] = val;
+                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[9] = val;
                                                 break;
                                             case "key0":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    PanelManager.Key0 = Convert.ToInt32(val);
-                                                }
+                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[0] = val;
+                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[0] = val;
                                                 break;
                                             case "keypgup":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    PanelManager.KeyPgUp = Convert.ToInt32(val);
-                                                }
+                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[32] = val;
+                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[32] = val;
                                                 break;
                                             case "keypgdn":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    PanelManager.KeyPgDn = Convert.ToInt32(val);
-                                                }
+                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[33] = val;
+                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[33] = val;
                                                 break;
                                             case "keyend":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    PanelManager.KeyEnd = Convert.ToInt32(val);
-                                                }
+                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[34] = val;
+                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[34] = val;
                                                 break;
                                             case "keyhome":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    PanelManager.KeyHome = Convert.ToInt32(val);
-                                                }
+                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[35] = val;
+                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[35] = val;
                                                 break;
                                             case "keydel":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    PanelManager.KeyDel = Convert.ToInt32(val);
-                                                }
+                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[36] = val;
+                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[36] = val;
                                                 break;
                                             case "keyins":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    PanelManager.KeyIns = Convert.ToInt32(val);
-                                                }
+                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[37] = val;
+                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[37] = val;
                                                 break;
                                             case "keyspace":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    PanelManager.KeyIns = Convert.ToInt32(val);
-                                                }
-                                                break;
-                                            case "overspeed":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    PanelManager.Overspd = Convert.ToInt32(val);
-                                                }
-                                                break;
-                                            case "speedlimit":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    PanelManager.SpeedLimit = Convert.ToInt32(val);
-                                                }
-                                                break;
-                                            case "idletimerexceed":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    PanelManager.IdleTimer = Convert.ToInt32(val);
-                                                }
+                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[10] = val;
+                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[10] = val;
                                                 break;
                                             default:
                                                 break;
@@ -130,6 +94,21 @@ namespace Plugin {
                                         break;
                                     case "system":
                                         switch (key) {
+                                            case "overspeedPanel":
+                                                if (int.TryParse(valstr, out val)) {
+                                                    PanelManager.Overspd = val;
+                                                }
+                                                break;
+                                            case "speedlimitPanel":
+                                                if (int.TryParse(valstr, out val)) {
+                                                    PanelManager.SpeedLimit = val;
+                                                }
+                                                break;
+                                            case "idletimerexceedPanel":
+                                                if (int.TryParse(valstr, out val)) {
+                                                    PanelManager.IdleTimer = val;
+                                                }
+                                                break;
                                             case "speedlimit":
                                                 if (int.TryParse(valstr, out val)) {
                                                     SafetySystem.SpeedLimit = val;
@@ -279,81 +258,6 @@ namespace Plugin {
                                         break;
                                     case "sound":
                                         switch (key) {
-                                            case "key0":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    ATSSoundManager.Key0 = val;
-                                                }
-                                                break;
-                                            case "key2":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    ATSSoundManager.Key2 = val;
-                                                }
-                                                break;
-                                            case "key3":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    ATSSoundManager.Key3 = val;
-                                                }
-                                                break;
-                                            case "key4":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    ATSSoundManager.Key4 = val;
-                                                }
-                                                break;
-                                            case "key5":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    ATSSoundManager.Key5 = val;
-                                                }
-                                                break;
-                                            case "key6":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    ATSSoundManager.Key6 = val;
-                                                }
-                                                break;
-                                            case "key7":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    ATSSoundManager.Key7 = val;
-                                                }
-                                                break;
-                                            case "key8":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    ATSSoundManager.Key8 = val;
-                                                }
-                                                break;
-                                            case "key9":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    ATSSoundManager.Key9 = val;
-                                                }
-                                                break;
-                                            case "keyins":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    ATSSoundManager.KeyIns = val;
-                                                }
-                                                break;
-                                            case "keydel":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    ATSSoundManager.KeyDel = val;
-                                                }
-                                                break;
-                                            case "keyhome":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    ATSSoundManager.KeyHome = val;
-                                                }
-                                                break;
-                                            case "keyend":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    ATSSoundManager.KeyEnd = val;
-                                                }
-                                                break;
-                                            case "keypgup":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    ATSSoundManager.KeyPgUp = val;
-                                                }
-                                                break;
-                                            case "keypgdn":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    ATSSoundManager.KeyPgDn = val;
-                                                }
-                                                break;
                                             case "dsdtimerexceeded":
                                                 if (int.TryParse(valstr, out val)) {
                                                     ATSSoundManager.DSDTimerExceeded = val;
@@ -369,6 +273,14 @@ namespace Plugin {
                                         }
                                         break;
                                     case "beacon":
+                                        if (key.StartsWith("beacon")) {
+                                            if (int.TryParse(seperated[0], out val))
+                                                if (int.TryParse(key.Substring(6), out int beaconNum)) BeaconManager.RegisterPanelBeacon(beaconNum, val);
+                                            if (seperated.Length > 1)
+                                                if (int.TryParse(key.Substring(6), out int beaconSound))
+                                                    if (int.TryParse(seperated[1], out int bSoundIndex))
+                                                        BeaconManager.RegisterSoundBeacon(beaconSound, bSoundIndex);
+                                        }
                                         switch (key) {
                                             case "speedlimit":
                                                 if (int.TryParse(valstr, out val)) {

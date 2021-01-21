@@ -2,23 +2,7 @@
 
 namespace Plugin {
     static class PanelManager {
-
-        internal static int Key0 { get; set; }
-        internal static int Key2 { get; set; }
-        internal static int Key3 { get; set; }
-        internal static int Key4 { get; set; }
-        internal static int Key5 { get; set; }
-        internal static int Key6 { get; set; }
-        internal static int Key7 { get; set; }
-        internal static int Key8 { get; set; }
-        internal static int Key9 { get; set; }
-        internal static int KeyDel { get; set; }
-        internal static int KeyIns { get; set; }
-        internal static int KeyHome { get; set; }
-        internal static int KeyEnd { get; set; }
-        internal static int KeyPgUp { get; set; }
-        internal static int KeyPgDn { get; set; }
-        internal static int KeySpace { get; set; }
+        internal static int[] Keys = new int[38];
         internal static int Overspd { get; set; }
         internal static int OvrspdEMBrake { get; set; }
         internal static int SpeedLimit { get; set; }
@@ -50,7 +34,7 @@ namespace Plugin {
             }
         }
 
-        internal static void OnBeacon (int beaconNum){
+        internal static void OnBeacon (int beaconNum, int[] Panel){
             Pendingbeacon = beaconNum;
         }
 
@@ -58,52 +42,52 @@ namespace Plugin {
             VirtualKeys virtualKey = key;
             switch (virtualKey) {
                 case VirtualKeys.S:
-                    Panel[KeySpace] ^= 1;
+                    Panel[Keys[10]] ^= 1;
                     break;
                 case VirtualKeys.A1:
-                    Panel[KeyIns] ^= 1;
+                    Panel[Keys[37]] ^= 1;
                     break;
                 case VirtualKeys.A2:
-                    Panel[KeyDel] ^= 1;
+                    Panel[Keys[36]] ^= 1;
                     break;
                 case VirtualKeys.B1:
-                    Panel[KeyHome] ^= 1;
+                    Panel[Keys[35]] ^= 1;
                     break;
                 case VirtualKeys.B2:
-                    Panel[KeyEnd] ^= 1;
+                    Panel[Keys[34]] ^= 1;
                     break;
                 case VirtualKeys.C1:
-                    Panel[KeyPgUp] ^= 1;
+                    Panel[Keys[33]] ^= 1;
                     break;
                 case VirtualKeys.C2:
-                    Panel[KeyPgDn] ^= 1;
+                    Panel[Keys[32]] ^= 1;
                     break;
                 case VirtualKeys.D:
-                    Panel[Key2] ^= 1;
+                    Panel[Keys[2]] ^= 1;
                     break;
                 case VirtualKeys.E:
-                    Panel[Key3] ^= 1;
+                    Panel[Keys[3]] ^= 1;
                     break;
                 case VirtualKeys.F:
-                    Panel[Key4] ^= 1;
+                    Panel[Keys[4]] ^= 1;
                     break;
                 case VirtualKeys.G:
-                    Panel[Key5] ^= 1;
+                    Panel[Keys[5]] ^= 1;
                     break;
                 case VirtualKeys.H:
-                    Panel[Key6] ^= 1;
+                    Panel[Keys[6]] ^= 1;
                     break;
                 case VirtualKeys.I:
-                    Panel[Key7] ^= 1;
+                    Panel[Keys[7]] ^= 1;
                     break;
                 case VirtualKeys.J:
-                    Panel[Key8] ^= 1;
+                    Panel[Keys[8]] ^= 1;
                     break;
                 case VirtualKeys.K:
-                    Panel[Key9] ^= 1;
+                    Panel[Keys[9]] ^= 1;
                     break;
                 case VirtualKeys.L:
-                    Panel[Key0] ^= 1;
+                    Panel[Keys[0]] ^= 1;
                     break;
                 default:
                     break;

@@ -82,7 +82,7 @@
       <DependentUpon>Plugin.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SafetySystem\DSDTimer.cs" />
+    <Compile Include="SafetySystem\Vigilance.cs" />
     <Compile Include="SafetySystem\Interlocker.cs" />
     <Compile Include="SafetySystem\SafetySystem.cs" />
     <Compile Include="SoundManager.cs" />
