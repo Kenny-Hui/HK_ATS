@@ -3,14 +3,14 @@
 namespace Plugin {
     /// <summary>The interface to be implemented by the plugin.</summary>
     public partial class Plugin : IRuntime {
-
+        
         private int[] Panel = null;
         /// <summary>Is called when the plugin is loaded.</summary>
         public bool Load(LoadProperties properties) {
             MessageManager.Initialise(properties.AddMessage);
             SoundManager.Initialise(properties.PlaySound, 256);
             Config.Load(properties);
-            Panel = new int[256];
+            Panel = new int[512];
             Sound = new SoundHelper(properties.PlaySound, 256);
             properties.Panel = Panel;
             properties.FailureReason = "HK_ATS failed to initalize, some functions will be unavailable.";
@@ -29,6 +29,7 @@ namespace Plugin {
 
         /// <summary>Is called when the plugin should initialize, reinitialize or jumping stations.</summary>
         public void Initialize(InitializationModes mode) {
+            Misc.Resetting = true;
             DSD.ScheduleResetTimer = true;
         }
 
@@ -38,6 +39,8 @@ namespace Plugin {
             SafetySystem.update(data);
             PanelManager.update(data, Panel);
             DSD.update(data);
+            Misc.Update(data);
+            //MessageManager.PrintMessage(Panel[245].ToString() + Panel[244].ToString(), OpenBveApi.Colors.MessageColor.Orange, 1.5);
             Sound.Update();
         }
 
@@ -84,15 +87,6 @@ namespace Plugin {
         /// <param name="beacon">The beacon data.</param>
         public void SetBeacon(BeaconData beacon) {
             BeaconManager.ProcessBeacon(beacon, Panel);
-            switch (beacon.Type) {
-                case 120:
-                    if (beacon.Optional > 0.1) {
-                        SafetySystem.SpeedLimit = beacon.Optional;
-                    }
-                    break;
-                default:
-                    break;
-            }
         }
 
         public void PerformAI(AIData data) {

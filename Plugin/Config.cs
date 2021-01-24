@@ -23,74 +23,8 @@ namespace Plugin {
                                 string[] seperated = valstr.Split(',');
                                 switch (currentSection) {
                                     case "keydown":
-                                        switch (key) {
-                                            case "key2":
-                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[2] = val;
-                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[2] = val;
-                                                break;
-                                            case "key3":
-                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[3] = val;
-                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[3] = val;
-                                                break;
-                                            case "key4":
-                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[4] = val;
-                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[4] = val;
-                                                break;
-                                            case "key5":
-                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[5] = val;
-                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[5] = val;
-                                                break;
-                                            case "key6":
-                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[6] = val;
-                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[6] = val;
-                                                break;
-                                            case "key7":
-                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[7] = val;
-                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[7] = val;
-                                                break;
-                                            case "key8":
-                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[8] = val;
-                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[8] = val;
-                                                break;
-                                            case "key9":
-                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[9] = val;
-                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[9] = val;
-                                                break;
-                                            case "key0":
-                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[0] = val;
-                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[0] = val;
-                                                break;
-                                            case "keypgup":
-                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[32] = val;
-                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[32] = val;
-                                                break;
-                                            case "keypgdn":
-                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[33] = val;
-                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[33] = val;
-                                                break;
-                                            case "keyend":
-                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[34] = val;
-                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[34] = val;
-                                                break;
-                                            case "keyhome":
-                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[35] = val;
-                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[35] = val;
-                                                break;
-                                            case "keydel":
-                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[36] = val;
-                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[36] = val;
-                                                break;
-                                            case "keyins":
-                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[37] = val;
-                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[37] = val;
-                                                break;
-                                            case "keyspace":
-                                                if (int.TryParse(seperated[0], out val)) PanelManager.Keys[10] = val;
-                                                if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[10] = val;
-                                                break;
-                                            default:
-                                                break;
-                                        }
+                                        if (int.TryParse(seperated[0], out val)) PanelManager.Keys[Func.Keys(key)] = val;
+                                        if (seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Keys[Func.Keys(key)] = val;
                                         break;
                                     case "system":
                                         switch (key) {
@@ -169,6 +103,57 @@ namespace Plugin {
                                         switch (key) {
                                             case "resettimerkey":
                                                 switch (valstr) {
+                                                    case "keywiperup":
+                                                        DSD.rsettimerkey = VirtualKeys.WiperSpeedUp;
+                                                        break;
+                                                    case "keywiperdown":
+                                                        DSD.rsettimerkey = VirtualKeys.WiperSpeedDown;
+                                                        break;
+                                                    case "keymainbreaker":
+                                                        DSD.rsettimerkey = VirtualKeys.MainBreaker;
+                                                        break;
+                                                    case "raisepan":
+                                                        DSD.rsettimerkey = VirtualKeys.RaisePantograph;
+                                                        break;
+                                                    case "lowerpan":
+                                                        DSD.rsettimerkey = VirtualKeys.LowerPantograph;
+                                                        break;
+                                                    case "keylivesteaminjector":
+                                                        DSD.rsettimerkey = VirtualKeys.LiveSteamInjector;
+                                                        break;
+                                                    case "keyrightdoor":
+                                                        DSD.rsettimerkey = VirtualKeys.RightDoors;
+                                                        break;
+                                                    case "keyleftdoor":
+                                                        DSD.rsettimerkey = VirtualKeys.LeftDoors;
+                                                        break;
+                                                    case "keygearup":
+                                                        DSD.rsettimerkey = VirtualKeys.GearUp;
+                                                        break;
+                                                    case "keygeardown":
+                                                        DSD.rsettimerkey = VirtualKeys.GearDown;
+                                                        break;
+                                                    case "keyfillfuel":
+                                                        DSD.rsettimerkey = VirtualKeys.FillFuel;
+                                                        break;
+                                                    case "keydecreasecutoff":
+                                                        DSD.rsettimerkey = VirtualKeys.DecreaseCutoff;
+                                                        break;
+                                                    case "keyincreasecutoff":
+                                                        DSD.rsettimerkey = VirtualKeys.IncreaseCutoff;
+                                                        break;
+                                                    case "keysteaminjector":
+                                                        DSD.rsettimerkey = VirtualKeys.ExhaustSteamInjector;
+                                                        break;
+                                                    case "keyblowers":
+                                                        DSD.rsettimerkey = VirtualKeys.Blowers;
+                                                        break;
+                                                    case "keyenginestop":
+                                                        DSD.rsettimerkey = VirtualKeys.EngineStop;
+                                                        break;
+                                                    case "keyenginestart":
+                                                        DSD.rsettimerkey = VirtualKeys.EngineStart;
+                                                        break;
                                                     case "keyspace":
                                                         DSD.rsettimerkey = VirtualKeys.S;
                                                         break;
@@ -285,6 +270,56 @@ namespace Plugin {
                                             case "speedlimit":
                                                 if (int.TryParse(valstr, out val)) {
                                                     BeaconManager.SpeedLimit = val;
+                                                }
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                        break;
+                                    case "misc":
+                                        switch (key) {
+                                            case "travelmeterpanel":
+                                                if (seperated.Length > 1) {
+                                                    switch (seperated[0]) {
+                                                        case "1":
+                                                            if (int.TryParse(seperated[1], out val))
+                                                                PanelManager.TravelMeter1 = val;
+                                                            break;
+                                                        case "2":
+                                                            if (int.TryParse(seperated[1], out val))
+                                                                PanelManager.TravelMeter2 = val;
+                                                            break;
+                                                        case "3":
+                                                            if (int.TryParse(seperated[1], out val))
+                                                                PanelManager.TravelMeter3 = val;
+                                                            break;
+                                                        case "4":
+                                                            if (int.TryParse(seperated[1], out val))
+                                                                PanelManager.TravelMeter4 = val;
+                                                            break;
+                                                        case "5":
+                                                            if (int.TryParse(seperated[1], out val))
+                                                                PanelManager.TravelMeter5 = val;
+                                                            break;
+                                                        case "6":
+                                                            if (int.TryParse(seperated[1], out val))
+                                                                PanelManager.TravelMeter6 = val;
+                                                            break;
+                                                    }
+                                                } else {
+                                                    if (int.TryParse(valstr, out val)) {
+                                                        PanelManager.TravelMeter = val;
+                                                    }
+                                                }
+                                                break;
+                                            case "cameramodepanel":
+                                                if (int.TryParse(valstr, out val)) {
+                                                    PanelManager.CameraViewMode = val;
+                                                }
+                                                break;
+                                            case "disabletimeaccel":
+                                                if (int.TryParse(valstr, out val)) {
+                                                    if (val == 1) Misc.DisableTimeAccel = true;
                                                 }
                                                 break;
                                             default:

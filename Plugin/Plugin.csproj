@@ -75,6 +75,7 @@
     <Compile Include="ATSSoundManager.cs" />
     <Compile Include="BeaconManager.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="Functions.cs" />
     <Compile Include="MessageManager.cs" />
     <Compile Include="PanelManager.cs" />
     <Compile Include="Plugin.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="SafetySystem\Interlocker.cs" />
     <Compile Include="SafetySystem\SafetySystem.cs" />
     <Compile Include="SoundManager.cs" />
+    <Compile Include="Misc.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenBveApi">

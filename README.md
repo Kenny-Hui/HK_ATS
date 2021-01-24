@@ -1,4 +1,4 @@
-# HK ATS
+# HK_ATS
 ## Introduction
 HK_ATS is a train plugin made for Hong Kong trains in the train simulator <a href="https://github.com/leezer3/OpenBVE">OpenBVE</a>.  
 The goal is to create an universal train plugin that is highly customizable, and can be used across all Hong Kong trains.  
@@ -8,12 +8,12 @@ Still new to C#, any help would be apperciated!
 Create a file called hkats.ini on the folder where the plugin is stored.  
 It is recommended to follow the template below  
 ```
-; Security Keydown event, i in keyi represents the key on the top number row of your keyboard (Default key assignment)
+; Keydown event, i in keyi represents the key on the top number row of your keyboard (Default key assignment)
 ; Format: keyi = PluginIndex, SoundIndex
 ; SoundIndex could be optional, but PluginIndex must be filled
 [keydown]
-key2 = 105
-key3 = 106
+key2 = 105,221
+key3 = 106,221
 key4 = 107
 key5 = 102
 key6 = 103
@@ -21,8 +21,7 @@ key7 = 104
 key8 = 99
 key9 = 100
 key0 = 251
-overspeed = 201
-idletimerexceed = 100
+keyspace = 225
 
 [system]
 ; Panel Indicator on overspeed and Vigilance Timeout
@@ -62,8 +61,13 @@ resetonnotchmove = 1
 ; 1 = door are locked once the train departs
 door = 1
 
+; Whether to apply brake when the door is opened
+; 0 = No brake will be applied when the door is opened
+; 1 = Apply 70% of the total brake notch when the door is opened
+doorapplybrake = 1
+
 ; Whether to lock the power notch to 0 when the door is opened
-; 0 = The power notch will not be locked, even when the door is opened
+; 0 = The power notch will not be locked when the door is opened
 ; 1 = The driver can't power the train when the door is opened
 doorpowerlock = 1
 
@@ -80,6 +84,27 @@ dsdtimerbrake = 219
 [beacon]
 speedlimit = 12
 beacon13 = 99,222
+
+[misc]
+; The Pluginstates to display how many meters the train travelled, will reset on jump stations
+; Adding an comma specifies the nth digit of meters, up to 6 digit
+; e.g. travelmeterpanel = 2,223 Means Pluginstates 223 will display the 2nd digit of the total meters
+
+travelmeterpanel = 0
+
+; PluginStates to display what the camera mode currently is
+; 0 = Interior (2D Cab), F1
+; 1 = Interior (Look Ahead), F1
+; 2 = Exterior, F2
+; 3 = Exterior (Follow the Track), F3
+; 4 = FlyBy (Look at the train), F4
+; 5 = FlyBy (Look and zoom at the train), F4
+cameramodepanel = 0
+
+; Whether to disable Time Acceleration (Ctrl+J)
+; 0 = Ctrl+J will speed up the simulations (default behavior)
+; 1 = Ctrl+J will not do anything
+disabletimeaccel = 0
 ```
 
 ## Section
@@ -140,7 +165,9 @@ limitspeed = 2
 ```
 
 ### [dsdtimer]
-Most train has an vigilance device. After a certain period of inactivity, the alarm will sound. If the driver does not take action, the device will automatically apply brake.  
+Most train has an vigilance device (DVS on MTR SP1900).  
+After a certain period of inactivity, the alarm will sound.  
+If the driver does not take action, the device will automatically apply brake.  
 **resettimerkey** - Key to reset the Idle Timer (key0, key1 etc.)  
 **dsdtimerlimit** - Time before exceeding the DSD time limit (in second)  
 **dsdtimerbrake** - Second before applying brake after exceeding the DSD time limit (0 to disable brake action)  
@@ -151,15 +178,15 @@ Most train has an vigilance device. After a certain period of inactivity, the al
 #### Example:
 ```
 [dsdtimer]  
-; Key to reset the DSD Timer
+; Key to reset the Vigilance Device Timer
 resettimerkey = key0
-; After 20 second, the DSD will be triggered
+; After 20 second, the Vigilance Device will be triggered
 dsdtimerlimit = 20
-; The train will apply emergency brake on 5 second after the DSD is triggered
+; The train will apply emergency brake on 5 second after the Vigilance Device is triggered
 dsdtimerbrake = 5
 ; Don't start the timer if the train is fully stopped
 disableontrainstop = 1
-; When the door is opened/closed, reset the DSD timer
+; When the door is opened/closed, reset the Vigilance Device timer
 resetondoormove = 1
 ; Reset the DSD timer when moving the reverser, or the power/brake notch
 resetonnotchmove = 1
@@ -167,7 +194,7 @@ resetonnotchmove = 1
 
 ### [beacon]
 Events when a train traveled pass a beacon. i in beaconi represents the beacon type.  
-Type and Data in CSV route command: Track.Beacon **Type**; BeaconStructureIndex; Section; **Data**  
+Type and Data in CSV route command: `Track.Beacon **Type**; BeaconStructureIndex; Section; **Data**`  
 **speedlimit** - Define the speedlimit  
 **beaconi** - Custom beacon, can be used to activate PanelIndex and SoundIndex  
 
@@ -177,7 +204,49 @@ Type and Data in CSV route command: Track.Beacon **Type**; BeaconStructureIndex;
 ; When the train passes beacon 124, adjust the speed limit according to the data provided.
 speedlimit = 124
 ; When the train passes beacon 125, triggers PluginIndex 150 and play soundIndex 102
-beacon125 = 150, 102
+beacon125 = 150,102
+```
+
+### [misc]
+Miscellaneous functions  
+
+**travelmeterpanel** - The Pluginstates to display how many meters the train travelled, will reset on jump stations.  
+Adding an comma specifies the nth digit of meters, up to 6 digit  
+travelmeterpanel = `2,223` Means Pluginstates 223 will display the 2nd digit of the total meters  
+
+**cameramodepanel** - PluginStates to display what the camera mode currently is  
+*0* = Interior (2D Cab), F1  
+*1* = Interior (Look Ahead), F1  
+*2* = Exterior, F2  
+*3* = Exterior (Follow the Track), F3  
+*4* = FlyBy (Look at the train), F4  
+*5* = FlyBy (Look and zoom at the train), F4  
+
+**disabletimeaccel** - Whether to disable Time Acceleration (Ctrl+J)  
+*0* = Ctrl+J will speed up the simulations (default behavior)  
+*1* = Ctrl+J will not do anything  
+disabletimeaccel = 0
+
+#### Example:
+```
+[misc]
+; Pluginstates[193] will return the first digit of the travelmeter
+; Pluginstates[192] will return the second digit of the travelmeter
+; Pluginstates[191] will return the third digit of the travelmeter
+; e.g. The train travelled 534m
+; Pluginstates[193] will return 4
+; Pluginstates[192] will return 3
+; Pluginstates[191] will return 5
+
+travelmeterpanel = 1,193
+travelmeterpanel = 2,192
+travelmeterpanel = 3,191
+
+; Pluginstates[230] will return 0 if the camera is in an 2D Cab
+cameramodepanel = 230
+
+; Pressing Ctrl+J will not do anything
+disabletimeaccel = 1
 ```
 
 ## Note

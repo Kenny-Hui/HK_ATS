@@ -62,6 +62,57 @@ namespace Plugin {
                 case VirtualKeys.L:
                     SoundManager.Play(Keys[0], 1.0, 1.0, false);
                     break;
+                case VirtualKeys.EngineStart:
+                    SoundManager.Play(Keys[31], 1.0, 1.0, false);
+                    break;
+                case VirtualKeys.EngineStop:
+                    SoundManager.Play(Keys[30], 1.0, 1.0, false);
+                    break;
+                case VirtualKeys.Blowers:
+                    SoundManager.Play(Keys[29], 1.0, 1.0, false);
+                    break;
+                case VirtualKeys.ExhaustSteamInjector:
+                    SoundManager.Play(Keys[28], 1.0, 1.0, false);
+                    break;
+                case VirtualKeys.IncreaseCutoff:
+                    SoundManager.Play(Keys[27], 1.0, 1.0, false);
+                    break;
+                case VirtualKeys.DecreaseCutoff:
+                    SoundManager.Play(Keys[26], 1.0, 1.0, false);
+                    break;
+                case VirtualKeys.FillFuel:
+                    SoundManager.Play(Keys[25], 1.0, 1.0, false);
+                    break;
+                case VirtualKeys.GearDown:
+                    SoundManager.Play(Keys[24], 1.0, 1.0, false);
+                    break;
+                case VirtualKeys.GearUp:
+                    SoundManager.Play(Keys[23], 1.0, 1.0, false);
+                    break;
+                case VirtualKeys.LeftDoors:
+                    SoundManager.Play(Keys[22], 1.0, 1.0, false);
+                    break;
+                case VirtualKeys.RightDoors:
+                    SoundManager.Play(Keys[21], 1.0, 1.0, false);
+                    break;
+                case VirtualKeys.LiveSteamInjector:
+                    SoundManager.Play(Keys[20], 1.0, 1.0, false);
+                    break;
+                case VirtualKeys.LowerPantograph:
+                    SoundManager.Play(Keys[19], 1.0, 1.0, false);
+                    break;
+                case VirtualKeys.RaisePantograph:
+                    SoundManager.Play(Keys[18], 1.0, 1.0, false);
+                    break;
+                case VirtualKeys.MainBreaker:
+                    SoundManager.Play(Keys[17], 1.0, 1.0, false);
+                    break;
+                case VirtualKeys.WiperSpeedDown:
+                    SoundManager.Play(Keys[16], 1.0, 1.0, false);
+                    break;
+                case VirtualKeys.WiperSpeedUp:
+                    SoundManager.Play(Keys[15], 1.0, 1.0, false);
+                    break;
                 default:
                     break;
             }
