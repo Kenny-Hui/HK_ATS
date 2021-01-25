@@ -3,6 +3,7 @@
 namespace Plugin {
     static class PanelManager {
         internal static int[] Keys = new int[38];
+        internal static int[] Keysup = new int[38];
         internal static int Overspd { get; set; }
         internal static int OvrspdEMBrake { get; set; }
         internal static int SpeedLimit { get; set; }
@@ -63,110 +64,19 @@ namespace Plugin {
         }
 
         internal static void KeyDown(VirtualKeys key, int[] Panel) {
-            VirtualKeys virtualKey = key;
-            switch (virtualKey) {
-                case VirtualKeys.S:
-                    Panel[Keys[10]] ^= 1;
-                    break;
-                case VirtualKeys.A1:
-                    Panel[Keys[37]] ^= 1;
-                    break;
-                case VirtualKeys.A2:
-                    Panel[Keys[36]] ^= 1;
-                    break;
-                case VirtualKeys.B1:
-                    Panel[Keys[35]] ^= 1;
-                    break;
-                case VirtualKeys.B2:
-                    Panel[Keys[34]] ^= 1;
-                    break;
-                case VirtualKeys.C1:
-                    Panel[Keys[33]] ^= 1;
-                    break;
-                case VirtualKeys.C2:
-                    Panel[Keys[32]] ^= 1;
-                    break;
-                case VirtualKeys.D:
-                    Panel[Keys[2]] ^= 1;
-                    break;
-                case VirtualKeys.E:
-                    Panel[Keys[3]] ^= 1;
-                    break;
-                case VirtualKeys.F:
-                    Panel[Keys[4]] ^= 1;
-                    break;
-                case VirtualKeys.G:
-                    Panel[Keys[5]] ^= 1;
-                    break;
-                case VirtualKeys.H:
-                    Panel[Keys[6]] ^= 1;
-                    break;
-                case VirtualKeys.I:
-                    Panel[Keys[7]] ^= 1;
-                    break;
-                case VirtualKeys.J:
-                    Panel[Keys[8]] ^= 1;
-                    break;
-                case VirtualKeys.K:
-                    Panel[Keys[9]] ^= 1;
-                    break;
-                case VirtualKeys.L:
-                    Panel[Keys[0]] ^= 1;
-                    break;
-                case VirtualKeys.EngineStart:
-                    Panel[Keys[31]] ^= 1;
-                    break;
-                case VirtualKeys.EngineStop:
-                    Panel[Keys[30]] ^= 1;
-                    break;
-                case VirtualKeys.Blowers:
-                    Panel[Keys[29]] ^= 1;
-                    break;
-                case VirtualKeys.ExhaustSteamInjector:
-                    Panel[Keys[28]] ^= 1;
-                    break;
-                case VirtualKeys.IncreaseCutoff:
-                    Panel[Keys[27]] ^= 1;
-                    break;
-                case VirtualKeys.DecreaseCutoff:
-                    Panel[Keys[26]] ^= 1;
-                    break;
-                case VirtualKeys.FillFuel:
-                    Panel[Keys[25]] ^= 1;
-                    break;
-                case VirtualKeys.GearDown:
-                    Panel[Keys[24]] ^= 1;
-                    break;
-                case VirtualKeys.GearUp:
-                    Panel[Keys[23]] ^= 1;
-                    break;
-                case VirtualKeys.LeftDoors:
-                    Panel[Keys[22]] ^= 1;
-                    break;
-                case VirtualKeys.RightDoors:
-                    Panel[Keys[21]] ^= 1;
-                    break;
-                case VirtualKeys.LiveSteamInjector:
-                    Panel[Keys[20]] ^= 1;
-                    break;
-                case VirtualKeys.LowerPantograph:
-                    Panel[Keys[19]] ^= 1;
-                    break;
-                case VirtualKeys.RaisePantograph:
-                    Panel[Keys[18]] ^= 1;
-                    break;
-                case VirtualKeys.MainBreaker:
-                    Panel[Keys[17]] ^= 1;
-                    break;
-                case VirtualKeys.WiperSpeedDown:
-                    Panel[Keys[16]] ^= 1;
-                    break;
-                case VirtualKeys.WiperSpeedUp:
-                    Panel[Keys[15]] ^= 1;
-                    break;
-                default:
-                    break;
+            if (Keys[Func.Key2ArrIndex(key)] != 0) {
+                if (Keysup[Func.Key2ArrIndex(key)] == 1) {
+                    Panel[Keys[Func.Key2ArrIndex(key)]] = 1;
+                } else {
+                    Panel[Keys[Func.Key2ArrIndex(key)]] ^= 1;
+                }
             }
+
         }
+
+        internal static void KeyUp(VirtualKeys key, int[] Panel) {
+            if (Keysup[Func.Key2ArrIndex(key)] == 1) Panel[Keys[Func.Key2ArrIndex(key)]] = 0;
+        }
+
     }
 }

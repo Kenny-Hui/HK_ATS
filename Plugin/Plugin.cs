@@ -71,10 +71,13 @@ namespace Plugin {
             DSD.KeyDown(key);
             PanelManager.KeyDown(key, Panel);
             ATSSoundManager.PlayOnce(key);
+            ATSSoundManager.PlayLoop(key);
         }
 
         /// <summary>Is called when a virtual key is released.</summary>
         public void KeyUp(VirtualKeys key) {
+            PanelManager.KeyUp(key, Panel);
+            //ATSSoundManager.PlayOnce(key);
         }
 
         public void HornBlow(HornTypes type) {

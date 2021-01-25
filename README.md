@@ -8,9 +8,9 @@ Still new to C#, any help would be apperciated!
 Create a file called hkats.ini on the folder where the plugin is stored.  
 It is recommended to follow the template below  
 ```
-; Keydown event, i in keyi represents the key on the top number row of your keyboard (Default key assignment)
-; Format: keyi = Pluginstates, SoundIndex
-; SoundIndex could be optional, but Pluginstates must be filled
+; Keydown event, see https://github.com/Kenny-Hui/HK_ATS/blob/main/README.md for full list of Key Functions
+; Format: keyfunction = Pluginstates, SoundIndex, Hold
+; Enter "hold" on the third argument will make the pluginstates reset back to 0 after releasing the key
 [keydown]
 key2 = 105,221
 key3 = 106,221
@@ -18,7 +18,7 @@ key4 = 107
 key5 = 102
 key6 = 103
 key7 = 104
-key8 = 99
+key8 = 99,0,hold
 key9 = 100
 key0 = 251
 keyspace = 225
@@ -55,6 +55,12 @@ resetondoormove = 1
 ; Whether to reset the timer when driver switch to another notch, or if another reverser is set (1 to reset the timer)
 resetonnotchmove = 1
 
+; The SoundIndex played when the Vigilance Device timeout exceeded
+dsdtimerexceededsound = 224
+
+; The SoundIndex played when the Vigilance Device applies brake
+dsdtimerbrakesound = 219
+
 [interlock]
 ; Lock the door when the train is moving
 ; 0 = door are always unlocked
@@ -76,16 +82,16 @@ doorpowerlock = 1
 ; 1 = door are locked on the side that isn't a station platform
 station = 1
 
-[sound]
-dsdtimerexceeded = 224
-dsdtimerbrake = 219
-
 [beacon]
 ; Format: beaconi/speedlimit = Pluginstates
 speedlimit = 18
 
 ; Format: beaconi = Pluginstates,SoundIndex
 beacon13 = 99,222
+
+[soundloop]
+key2 = 222
+key3 = 222
 
 [misc]
 ; The pluginstates to display how many meters the train travelled, will reset on jump stations
@@ -161,18 +167,22 @@ crashspeed = 5
 ## Config file - Sections
 ### [keydown]
 When a key is pressed, i in keyi represents the key on the top number row of your keyboard (Default key assignment)  
-Format: keyfunction = PanelIndex, SoundIndex  
+Format: `keyfunction = PanelIndex, SoundIndex, Hold`  
+Enter "hold" on the third argument if you want to activate a pluginstates only when the player is holding the key.  
+You can type 0 on SoundIndex if you don't want any sound, but you want the hold feature
 
 #### Example:
 ```
 [keydown]
-; When the "2" key is pressed on the keyboard, trigger PluginIndicator 105
-; When the "3" key is pressed on the keyboard, trigger PluginIndicator 106 and play SoundIndex 27 defined in sound.cfg
-key2 = 105
-key3 = 106, 27
-keyspace = 107
-overspeed = 201
-idletimerexceed = 100
+; When the "2" key is pressed, trigger PluginIndicator 105 and play SoundIndex 221 defined in sound.cfg
+key2 = 105,221
+
+; When the "3" key is pressed, only trigger PluginIndicator 106
+key3 = 106
+
+; When the "8" key is pressed, trigger PluginIndicator 99, but don't play any sound.
+; Will deactivate PluginIndicator 99 (set back to 0) once the player is no longer holding the "8" key.
+key8 = 99,0,hold
 ```
 ### [interlock]
 The interlock section offers different variety of train interlocking.  
@@ -204,8 +214,10 @@ The system section defines different security system.
 #### Example:
 ```
 [system]  
-; Panel Indicator on overspeed and Vigilance Timeout
+; Panel Indicator on overspeed
 overspeedPanel = 201
+
+; Panel Indicator on Vigilance Timeout
 idletimerexceedPanel = 100
 
 ; Speedlimit is 70 km/h
@@ -216,31 +228,44 @@ limitspeed = 2
 ```
 
 ### [dsdtimer]
-Most train has an vigilance device (DVS on MTR SP1900).  
+Most train has an vigilance device (Also called DVS on MTR SP1900).  
 After a certain period of inactivity, the alarm will sound.  
-If the driver does not take action, the device will automatically apply brake.  
-**resettimerkey** - Key to reset the Idle Timer (key0, key1 etc.)  
-**dsdtimerlimit** - Time before exceeding the DSD time limit (in second)  
+If the driver does not take action, the device can automatically apply brake.  
+**resettimerkey** - Key to reset the Vigilance Device Timer (key0, key1 etc.)  
+**dsdtimerlimit** - Time before exceeding the Vigilance Device time limit (in second)  
 **dsdtimerbrake** - Second before applying brake after exceeding the DSD time limit (0 to disable brake action)  
-**disableontrainstop** - Whether to disable DSD when the train is stopped (1 to disable DSD on train stop)  
+**disableontrainstop** - Whether to disable Vigilance Device timer when the train is stopped (1 to disable DSD on train stop)  
 **resetondoormove** - Whether to reset the timer when a door opened (1 to reset the timer when door opened)  
-**resetonnotchmove** = Whether to reset the timer when driver switch to another notch, or if another reverser is set (1 to reset the timer)  
+**resetonnotchmove** - Whether to reset the timer when driver switch to another notch, or if another reverser is set (1 to reset the timer)  
+**dsdtimerexceededsound** - The SoundIndex played when the Vigilance Device timeout exceeded  
+**dsdtimerbrakesound** - The SoundIndex played when the Vigilance Device applies brake
 
 #### Example:
 ```
-[dsdtimer]  
-; Key to reset the Vigilance Device Timer
+[dsdtimer]
+; Key to reset the Vigilance Device
 resettimerkey = key0
-; After 20 second, the Vigilance Device will be triggered
+
+; Time before exceeding the Vigilance time limit (in second)
 dsdtimerlimit = 20
-; The train will apply emergency brake on 5 second after the Vigilance Device is triggered
+
+; Second before applying brake after exceeding the Vigilance time limit (0 to disable brake action)
 dsdtimerbrake = 5
-; Don't start the timer if the train is fully stopped
+
+; Whether to disable/reset the Vigilance device when the train is stopped (1 to disable/reset on train stop)
 disableontrainstop = 1
-; When the door is opened/closed, reset the Vigilance Device timer
+
+; Whether to reset the timer when a door opened (1 to reset the timer when door opened)
 resetondoormove = 1
-; Reset the DSD timer when moving the reverser, or the power/brake notch
+
+; Whether to reset the timer when driver switch to another notch, or if another reverser is set (1 to reset the timer)
 resetonnotchmove = 1
+
+; The SoundIndex played when the Vigilance Device timeout exceeded
+dsdtimerexceededsound = 224
+
+; The SoundIndex played when the Vigilance Device applies brake
+dsdtimerbrakesound = 219
 ```
 
 ### [beacon]
