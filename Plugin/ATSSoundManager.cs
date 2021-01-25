@@ -7,6 +7,7 @@ namespace Plugin {
         internal static int DSDTimerExceeded { get; set; }
         internal static int DSDTimerBrake { get; set; }
         internal static int Pendingbeacon;
+        internal static int Crash { get; set; }
         internal static void OnBeacon(int beaconSound) {
             Pendingbeacon = beaconSound;
             SoundManager.Play(Beacon[Pendingbeacon], 1.0, 1.0, false);

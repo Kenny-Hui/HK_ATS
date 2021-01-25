@@ -34,9 +34,9 @@ namespace Plugin {
                     return 16;
                 case "keymainbreaker":
                     return 17;
-                case "raisepan":
+                case "keyraisepan":
                     return 18;
-                case "lowerpan":
+                case "keylowerpan":
                     return 19;
                 case "keylivesteaminjector":
                     return 20;

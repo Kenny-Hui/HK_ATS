@@ -15,6 +15,7 @@ namespace Plugin {
                 Travelled = currentLoc;
                 Resetting = false;
             }
+
             if (DisableTimeAccel) data.DisableTimeAcceleration = true;
             TravelMeter = currentLoc - Travelled;
         }

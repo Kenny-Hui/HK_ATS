@@ -9,8 +9,8 @@ Create a file called hkats.ini on the folder where the plugin is stored.
 It is recommended to follow the template below  
 ```
 ; Keydown event, i in keyi represents the key on the top number row of your keyboard (Default key assignment)
-; Format: keyi = PluginIndex, SoundIndex
-; SoundIndex could be optional, but PluginIndex must be filled
+; Format: keyi = Pluginstates, SoundIndex
+; SoundIndex could be optional, but Pluginstates must be filled
 [keydown]
 key2 = 105,221
 key3 = 106,221
@@ -37,16 +37,16 @@ speedlimit = 55
 limitspeed = 2
 
 [dsdtimer]
-; Key to reset the Idle Timer
+; Key to reset the Vigilance Device
 resettimerkey = key0
 
-; Time before exceeding the DSD time limit (in second)
+; Time before exceeding the Vigilance time limit (in second)
 dsdtimerlimit = 20
 
-; Second before applying brake after exceeding the DSD time limit (0 to disable brake action)
+; Second before applying brake after exceeding the Vigilance time limit (0 to disable brake action)
 dsdtimerbrake = 5
 
-; Whether to disable DSD when the train is stopped (1 to disable DSD on train stop)
+; Whether to disable/reset the Vigilance device when the train is stopped (1 to disable/reset on train stop)
 disableontrainstop = 1
 
 ; Whether to reset the timer when a door opened (1 to reset the timer when door opened)
@@ -66,12 +66,12 @@ door = 1
 ; 1 = Apply 70% of the total brake notch when the door is opened
 doorapplybrake = 1
 
-; Whether to lock the power notch to 0 when the door is opened
+; Whether to lock the power notch when the door is opened
 ; 0 = The power notch will not be locked when the door is opened
 ; 1 = The driver can't power the train when the door is opened
 doorpowerlock = 1
 
-; Only unlock the door of where the station platform is
+; Whether to only unlock the door of where the station platform is
 ; 0 = door are always unlocked
 ; 1 = door are locked on the side that isn't a station platform
 station = 1
@@ -80,19 +80,23 @@ station = 1
 dsdtimerexceeded = 224
 dsdtimerbrake = 219
 
-; Format: beaconi/speedlimit = PluginIndex, SoundIndex
 [beacon]
-speedlimit = 12
+; Format: beaconi/speedlimit = Pluginstates
+speedlimit = 18
+
+; Format: beaconi = Pluginstates,SoundIndex
 beacon13 = 99,222
 
 [misc]
-; The Pluginstates to display how many meters the train travelled, will reset on jump stations
-; Adding an comma specifies the nth digit of meters, up to 6 digit
-; e.g. travelmeterpanel = 2,223 Means Pluginstates 223 will display the 2nd digit of the total meters
+; The pluginstates to display how many meters the train travelled, will reset on jump stations
+; Adding a comma specifies the nth digit of meters, up to 6 digit
+; e.g. travelmeterpanel = 2,223 means pluginstates 223 will display the 2nd digit of the total meters
 
-travelmeterpanel = 0
+travelmeterpanel = 1,244
+travelmeterpanel = 2,245
 
-; PluginStates to display what the camera mode currently is
+; Pluginstates to display what the camera mode currently is
+; The returned value is:
 ; 0 = Interior (2D Cab), F1
 ; 1 = Interior (Look Ahead), F1
 ; 2 = Exterior, F2
@@ -105,18 +109,65 @@ cameramodepanel = 0
 ; 0 = Ctrl+J will speed up the simulations (default behavior)
 ; 1 = Ctrl+J will not do anything
 disabletimeaccel = 0
+
+; The pluginstates to display/The SoundIndex played when the train crashed into the previous train (if any)
+; This allows custom crash animations and sound
+; The previous train is set by the .RunInterval command
+; Format: crash = Pluginstates,Soundindex
+; SoundIndex could be optional, but Pluginstates must be filled
+crash = 213,223
+
+; The minimum speed to be considered as a crash if player's trains touches the previous train
+; e.g. crashspeed = 5, if player's trains touches the previous train and is lower than 5 km/h, it would not be considered as a crash
+crashspeed = 5
 ```
 
-## Section
+## Key Functions
+**Note: All keys assignment below is the default key assignment from OpenBVE**  
+**key2** = The 2 on the number row of your keyboard  
+**key3** = The 3 on the number row of your keyboard  
+**key4** = The 4 on the number row of your keyboard  
+**key5** = The 5 on the number row of your keyboard  
+**key6** = The 6 on the number row of your keyboard  
+**key7** = The 7 on the number row of your keyboard  
+**key8** = The 8 on the number row of your keyboard  
+**key9** = The 9 on the number row of your keyboard  
+**key0** = The 0 key on the number row of your keyboard  
+**keyspace** = The space bar on your keyboard  
+**keypgup** = The PageUp key on your keyboard  
+**keypgdn** = The PageDown key on your keyboard  
+**keyend** = The End key on your keyboard  
+**keyhome** = The Home key on your keyboard  
+**keydel** = The Delete key on your keyboard  
+**keyins** = The Insert key on your keyboard  
+**keywiperup** = The key to increase wiper speed, default key is Y  
+**keywiperdown** = The key to decrease wiper speed, default key is Ctrl+Y  
+**keymainbreaker** = The key to toggle the main breaker, default key is B  
+**keyraisepan** = The key to raises the pantograph, default key is P  
+**keylowerpan** = The key to lower the pantograph, default key is Ctrl+P  
+**keylivesteaminjector** = The key to activate/deactivate the live stream injector, default is I  
+**keyrightdoor** = The key to open/close the right door, default is F6  
+**keyleftdoor** = The key to open/close the left door, default is F5  
+**keygearup** = The key to shift up a gear in a train fitted with a gearbox, default is G  
+**keygeardown** = The key to shift down a gear in a train fitted with a gearbox, default is Ctrl+G  
+**keyfillfuel** = The key to fills fuel, default is none?  
+**keyincreasecutoff** = The key to decrease the cutoff, default is U  
+**keydecreasecutoff** = The key to decrease the cutoff, default is Ctrl+U  
+**keysteaminjector** = The key to activate/deactivate exhaust steam injector, default is O  
+**keyblowers** = The key to activate/deactivate the blowers, default is K  
+**keyenginestart** = The key to start the engine, default is E  
+**keyenginestop** = The key to stop the engine, default is Ctrl+E  
+
+## Config file - Sections
 ### [keydown]
 When a key is pressed, i in keyi represents the key on the top number row of your keyboard (Default key assignment)  
-Format: function = PanelIndex, SoundIndex  
+Format: keyfunction = PanelIndex, SoundIndex  
 
 #### Example:
 ```
 [keydown]
 ; When the "2" key is pressed on the keyboard, trigger PluginIndicator 105
-; When the "3" key is pressed on the keyboard, trigger PluginIndicator 106 and play sound index 27 defined in sound.cfg
+; When the "3" key is pressed on the keyboard, trigger PluginIndicator 106 and play SoundIndex 27 defined in sound.cfg
 key2 = 105
 key3 = 106, 27
 keyspace = 107
@@ -227,6 +278,18 @@ travelmeterpanel = `2,223` Means Pluginstates 223 will display the 2nd digit of 
 *1* = Ctrl+J will not do anything  
 disabletimeaccel = 0
 
+**crash** - The pluginstates to display/The SoundIndex played when the train crashed into the previous RunInterval train (if any)  
+This allows custom crash animations and sound  
+Format: **crash = Pluginstates,Soundindex**  
+Specified pluginstates will be reset  when the train jumped to another stations<br><br>
+Conditions:  
+**1.** The train has not been crashed before  
+**2.** The distance between the previous train and the current train must be less than 0.2m and higher than -1m
+
+**crashspeed** - The minimum speed to be considered as a crash if player's trains touches the previous train  
+
+
+
 #### Example:
 ```
 [misc]
@@ -247,6 +310,12 @@ cameramodepanel = 230
 
 ; Pressing Ctrl+J will not do anything
 disabletimeaccel = 1
+
+; When player's train crashed into the previous train, it will activate Pluginstates 213 and SoundIndex 223
+crash = 213,223
+
+; If the speed is the player's train is less than 5 km/h, it won't be considered as a crash
+crashspeed = 5
 ```
 
 ## Note

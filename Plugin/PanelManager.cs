@@ -15,6 +15,7 @@ namespace Plugin {
         internal static int TravelMeter5 { get; set; }
         internal static int TravelMeter6 { get; set; }
         internal static int CameraViewMode { get; set; }
+        internal static int Crash { get; set; }
         internal static int[] Beacon = new int[512];
         internal static int Pendingbeacon;
 

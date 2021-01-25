@@ -3,7 +3,8 @@
 namespace Plugin {
     /// <summary>The interface to be implemented by the plugin.</summary>
     public partial class Plugin : IRuntime {
-        
+        internal static bool crashed;
+        internal static int CrashSpeed;
         private int[] Panel = null;
         /// <summary>Is called when the plugin is loaded.</summary>
         public bool Load(LoadProperties properties) {
@@ -35,12 +36,21 @@ namespace Plugin {
 
         /// <summary>Is called every frame.</summary>
         public void Elapse(ElapseData data) {
+            if (data.PrecedingVehicle != null) {
+                if (data.PrecedingVehicle.Distance < 0.2 && data.PrecedingVehicle.Distance > -1 && !crashed) {
+                    if (data.Vehicle.Speed.KilometersPerHour > CrashSpeed) {
+                        crashed = true;
+                        Panel[PanelManager.Crash] = 1;
+                        SoundManager.Play(ATSSoundManager.Crash, 1.0, 1.0, false);
+                    }
+                }
+            }
+
             Interlocker.update(data);
             SafetySystem.update(data);
             PanelManager.update(data, Panel);
             DSD.update(data);
             Misc.Update(data);
-            //MessageManager.PrintMessage(Panel[245].ToString() + Panel[244].ToString(), OpenBveApi.Colors.MessageColor.Orange, 1.5);
             Sound.Update();
         }
 

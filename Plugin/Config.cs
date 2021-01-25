@@ -322,6 +322,13 @@ namespace Plugin {
                                                     if (val == 1) Misc.DisableTimeAccel = true;
                                                 }
                                                 break;
+                                            case "crash":
+                                                if (int.TryParse(seperated[0], out val)) PanelManager.Crash = val;
+                                                if(seperated.Length > 1) if (int.TryParse(seperated[1], out val)) ATSSoundManager.Crash = val;
+                                                break;
+                                            case "crashspeed":
+                                                if (int.TryParse(valstr, out val)) Plugin.CrashSpeed = val;
+                                                break;
                                             default:
                                                 break;
                                         }
