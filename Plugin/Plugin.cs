@@ -31,7 +31,7 @@ namespace Plugin {
         /// <summary>Is called when the plugin should initialize, reinitialize or jumping stations.</summary>
         public void Initialize(InitializationModes mode) {
             Misc.Resetting = true;
-            DSD.ScheduleResetTimer = true;
+            DVS.ScheduleResetTimer = true;
         }
 
         /// <summary>Is called every frame.</summary>
@@ -49,26 +49,26 @@ namespace Plugin {
             Interlocker.update(data);
             SafetySystem.update(data);
             PanelManager.update(data, Panel);
-            DSD.update(data);
+            DVS.update(data);
             Misc.Update(data);
             Sound.Update();
         }
 
         public void SetReverser(int reverser) {
-            DSD.NotchMove();
+            if (DVS.ResetOnNotchMove) DVS.ResetTimer();
         }
 
         public void SetPower(int powerNotch) {
-            DSD.NotchMove();
+            if(DVS.ResetOnNotchMove) DVS.ResetTimer();
         }
 
         public void SetBrake(int brakeNotch) {
-            DSD.NotchMove();
+            if (DVS.ResetOnNotchMove) DVS.ResetTimer();
         }
 
         /// <summary>Is called when a virtual key is pressed.</summary>
         public void KeyDown(VirtualKeys key) {
-            DSD.KeyDown(key);
+            DVS.KeyDown(key);
             PanelManager.KeyDown(key, Panel);
             ATSSoundManager.PlayOnce(key);
             ATSSoundManager.PlayLoop(key);
@@ -77,10 +77,16 @@ namespace Plugin {
         /// <summary>Is called when a virtual key is released.</summary>
         public void KeyUp(VirtualKeys key) {
             PanelManager.KeyUp(key, Panel);
-            //ATSSoundManager.PlayOnce(key);
         }
 
         public void HornBlow(HornTypes type) {
+            if (DVS.ResetOnKlaxon == 4) {
+                DVS.ResetTimer();
+            } else {
+                if (type == HornTypes.Primary && DVS.ResetOnKlaxon == 1) DVS.ResetTimer();
+                if (type == HornTypes.Secondary && DVS.ResetOnKlaxon == 2) DVS.ResetTimer();
+                if (type == HornTypes.Music && DVS.ResetOnKlaxon == 3) DVS.ResetTimer();
+            }
         }
 
         /// <summary>Is called when the state of the doors changes.</summary>
@@ -94,6 +100,7 @@ namespace Plugin {
             }
         }
         public void SetSignal(SignalData[] signal) {
+            
         }
 
         /// <summary>Is called when the train passes a beacon.</summary>

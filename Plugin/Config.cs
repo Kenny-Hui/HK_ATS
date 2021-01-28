@@ -121,49 +121,56 @@ namespace Plugin {
                                                 break;
                                         }
                                         break;
-                                    case "dsdtimer":
+                                    case "vigilance":
                                         switch (key) {
                                             case "resettimerkey":
                                                 if(Func.String2VKey(valstr) != null)
-                                                    DSD.rsettimerkey = (VirtualKeys) Func.String2VKey(valstr);
+                                                    DVS.rsettimerkey = (VirtualKeys) Func.String2VKey(valstr);
                                                 break;
-                                            case "dsdtimerlimit":
+                                            case "timerlimit":
                                                 if (int.TryParse(valstr, out val)) {
-                                                    DSD.DSDTimerTimeout = val;
+                                                    DVS.DSDTimerTimeout = val;
                                                 }
                                                 break;
-                                            case "dsdtimerbrake":
+                                            case "timerbrake":
                                                 if (int.TryParse(valstr, out val)) {
-                                                    DSD.DSDTimerBrakeTimeout = DSD.DSDTimerTimeout + val;
+                                                    DVS.DSDTimerBrakeTimeout = DVS.DSDTimerTimeout + val;
                                                 }
                                                 break;
                                             case "disableontrainstop":
                                                 if (int.TryParse(valstr, out val)) {
                                                     if (val == 1) {
-                                                        DSD.DSDDisableOnTrainStop = true;
+                                                        DVS.DSDDisableOnTrainStop = true;
                                                     }
                                                 }
                                                 break;
                                             case "resetondoormove":
                                                 if (int.TryParse(valstr, out val)) {
                                                     if (val == 1) {
-                                                        DSD.ResetOnDoorMove = true;
+                                                        DVS.ResetOnDoorMove = true;
                                                     }
                                                 }
                                                 break;
                                             case "resetonnotchmove":
                                                 if (int.TryParse(valstr, out val)) {
                                                     if (val == 1) {
-                                                        DSD.ResetOnNotchMove = true;
+                                                        DVS.ResetOnNotchMove = true;
                                                     }
                                                 }
                                                 break;
-                                            case "dsdtimerexceededsound":
+                                            case "resetonklaxon":
+                                                if (int.TryParse(valstr, out val)) {
+                                                    if (val <= 4) {
+                                                        DVS.ResetOnKlaxon = val;
+                                                    }
+                                                }
+                                                break;
+                                            case "timerexceededsound":
                                                 if (int.TryParse(valstr, out val)) {
                                                     ATSSoundManager.DSDTimerExceeded = val;
                                                 }
                                                 break;
-                                            case "dsdtimerbrakesound":
+                                            case "timerbrakesound":
                                                 if (int.TryParse(valstr, out val)) {
                                                     ATSSoundManager.DSDTimerBrake = val;
                                                 }

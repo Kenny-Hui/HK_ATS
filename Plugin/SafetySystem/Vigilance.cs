@@ -1,7 +1,7 @@
 ﻿using OpenBveApi.Runtime;
 
 namespace Plugin {
-    static class DSD {
+    static class DVS {
         internal static bool DoorOpened { get; set; }
         internal static double DSDTimer { get; set; }
         internal static double DSDLastTimer { get; set; }
@@ -15,17 +15,18 @@ namespace Plugin {
         internal static bool DSDDisableOnTrainStop { get; set; }
         internal static bool ResetOnDoorMove { get; set; }
         internal static bool ResetOnNotchMove { get; set; }
+        internal static int ResetOnKlaxon { get; set; }
 
         internal static void update(ElapseData data) {
             currentTime = data.TotalTime.Seconds;
 
             if (ScheduleResetTimer) {
-                ResetTimer();
+                ResetTimerMethod();
                 ScheduleResetTimer = false;
             }
 
             if (DSDDisableOnTrainStop && data.Vehicle.Speed.KilometersPerHour < 1) {
-                ResetTimer();
+                ResetTimerMethod();
             }
 
             if (DSDTimerBrakeExceeded) {
@@ -58,7 +59,7 @@ namespace Plugin {
 
         internal static void KeyDown(VirtualKeys key) {
             if (key == rsettimerkey) {
-                ScheduleResetTimer = true;
+                ResetTimer();
             } else {
                 switch (key) {
                     case VirtualKeys.LeftDoors:
@@ -73,11 +74,11 @@ namespace Plugin {
             }
         }
 
-        internal static void NotchMove() {
+        internal static void ResetTimer() {
             ScheduleResetTimer = true;
         }
 
-        internal static void ResetTimer() {
+        internal static void ResetTimerMethod() {
             DSDLastTimer = currentTime;
             DSDTimer = 0;
             DSDTimerExceeded = false;

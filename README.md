@@ -24,9 +24,12 @@ key0 = 251
 keyspace = 225
 
 [system]
-; Panel Indicator on overspeed and Vigilance Timeout
+; Panel Indicator on overspeed
 overspeedPanel = 201
+
+; Panel Indicator on Vigilance Timeout
 idletimerexceedPanel = 100
+
 ; Define the speed limit, 0 to disable
 speedlimit = 55
 
@@ -36,15 +39,15 @@ speedlimit = 55
 ; 2 = Apply emergency brake after exceeding speed limit until the train fully stops
 limitspeed = 2
 
-[dsdtimer]
+[vigilance]
 ; Key to reset the Vigilance Device
 resettimerkey = key0
 
 ; Time before exceeding the Vigilance time limit (in second)
-dsdtimerlimit = 20
+timerlimit = 20
 
 ; Second before applying brake after exceeding the Vigilance time limit (0 to disable brake action)
-dsdtimerbrake = 5
+timerbrake = 5
 
 ; Whether to disable/reset the Vigilance device when the train is stopped (1 to disable/reset on train stop)
 disableontrainstop = 1
@@ -56,10 +59,18 @@ resetondoormove = 1
 resetonnotchmove = 1
 
 ; The SoundIndex played when the Vigilance Device timeout exceeded
-dsdtimerexceededsound = 224
+timerexceededsound = 224
 
 ; The SoundIndex played when the Vigilance Device applies brake
-dsdtimerbrakesound = 219
+timerbrakesound = 219
+
+; Which Klaxon (Horn) will reset the Vigilance Timer
+; 0 = Horning won't reset the timer
+; 1 = Primary Horn
+; 2 = Secondary Horn
+; 3 = Music Horn
+; 4 = All Horn
+resetonklaxon = 4
 
 [interlock]
 ; Lock the door when the train is moving
@@ -227,30 +238,37 @@ speedlimit = 70
 limitspeed = 2
 ```
 
-### [dsdtimer]
+### [vigilance]
 Most train has an vigilance device (Also called DVS on MTR SP1900).  
 After a certain period of inactivity, the alarm will sound.  
 If the driver does not take action, the device can automatically apply brake.  
 **resettimerkey** - Key to reset the Vigilance Device Timer (key0, key1 etc.)  
-**dsdtimerlimit** - Time before exceeding the Vigilance Device time limit (in second)  
-**dsdtimerbrake** - Second before applying brake after exceeding the DSD time limit (0 to disable brake action)  
+**timerlimit** - Time before exceeding the Vigilance Device time limit (in second)  
+**timerbrake** - Second before applying brake after exceeding the DSD time limit (0 to disable brake action)  
 **disableontrainstop** - Whether to disable Vigilance Device timer when the train is stopped (1 to disable DSD on train stop)  
 **resetondoormove** - Whether to reset the timer when a door opened (1 to reset the timer when door opened)  
 **resetonnotchmove** - Whether to reset the timer when driver switch to another notch, or if another reverser is set (1 to reset the timer)  
-**dsdtimerexceededsound** - The SoundIndex played when the Vigilance Device timeout exceeded  
-**dsdtimerbrakesound** - The SoundIndex played when the Vigilance Device applies brake
+**resetonklaxon** - Specify the Klaxon (Horn) that will reset the Vigilance Timer when horned  
+0 = Horning won't reset the timer  
+1 = Primary Horn  
+2 = Secondary Horn  
+3 = Music Horn  
+4 = All Horn  
+**timerexceededsound** - The SoundIndex played when the Vigilance Device timeout exceeded  
+**timerbrakesound** - The SoundIndex played when the Vigilance Device applies brake
+
 
 #### Example:
 ```
-[dsdtimer]
+[vigilance]
 ; Key to reset the Vigilance Device
 resettimerkey = key0
 
 ; Time before exceeding the Vigilance time limit (in second)
-dsdtimerlimit = 20
+timerlimit = 20
 
 ; Second before applying brake after exceeding the Vigilance time limit (0 to disable brake action)
-dsdtimerbrake = 5
+timerbrake = 5
 
 ; Whether to disable/reset the Vigilance device when the train is stopped (1 to disable/reset on train stop)
 disableontrainstop = 1
@@ -261,11 +279,14 @@ resetondoormove = 1
 ; Whether to reset the timer when driver switch to another notch, or if another reverser is set (1 to reset the timer)
 resetonnotchmove = 1
 
+; Pressing the Secondary Horn (Usually numpad "+") will reset the Vigilance Timer
+resetonklaxon = 2
+
 ; The SoundIndex played when the Vigilance Device timeout exceeded
-dsdtimerexceededsound = 224
+timerexceededsound = 224
 
 ; The SoundIndex played when the Vigilance Device applies brake
-dsdtimerbrakesound = 219
+timerbrakesound = 219
 ```
 
 ### [beacon]

@@ -48,7 +48,7 @@ namespace Plugin {
             }
             Panel[SpeedLimit] = (int) data.Vehicle.Speed.KilometersPerHour;
 
-            if (DSD.DSDTimerTimeout != 0 && DSD.DSDTimer > DSD.DSDTimerTimeout) {
+            if (DVS.DSDTimerTimeout != 0 && DVS.DSDTimer > DVS.DSDTimerTimeout) {
                 Panel[IdleTimer] = 1;
             } else {
                 Panel[IdleTimer] = 0;
