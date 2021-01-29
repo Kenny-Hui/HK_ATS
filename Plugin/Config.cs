@@ -59,11 +59,6 @@ namespace Plugin {
                                                     PanelManager.SpeedLimit = val;
                                                 }
                                                 break;
-                                            case "idletimerexceedPanel":
-                                                if (int.TryParse(valstr, out val)) {
-                                                    PanelManager.IdleTimer = val;
-                                                }
-                                                break;
                                             case "speedlimit":
                                                 if (int.TryParse(valstr, out val)) {
                                                     SafetySystem.SpeedLimit = val;
@@ -155,6 +150,11 @@ namespace Plugin {
                                                     if (val == 1) {
                                                         DVS.ResetOnNotchMove = true;
                                                     }
+                                                }
+                                                break;
+                                            case "timerexceedPanel":
+                                                if (int.TryParse(valstr, out val)) {
+                                                    PanelManager.IdleTimer = val;
                                                 }
                                                 break;
                                             case "resetonklaxon":
