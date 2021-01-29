@@ -131,8 +131,8 @@ disabletimeaccel = 0
 ; The pluginstates to display/The SoundIndex played when the train crashed into the previous train (if any)
 ; This allows custom crash animations and sound
 ; The previous train is set by the .RunInterval command
-; Format: crash = Pluginstates,Soundindex
-; SoundIndex could be optional, but Pluginstates must be filled
+; Format: crash = Panelindicator,Soundindex
+; SoundIndex could be optional, but Panelindicator must be filled
 crash = 213,223
 
 ; The minimum speed to be considered as a crash if player's trains touches the previous train
@@ -200,7 +200,7 @@ key8 = 99,0,hold
 The interlock section offers different variety of train interlocking.  
 1 means it's enabled, 0 means it's disabled  
 **door** - Whether to lock the door when the train is running  
-**doorapplybrake** - Whether to lock the power when the door is opened  
+**doorapplybrake** - Whether to apply 70% of the brake when the door is opened  
 **doorpowerlock** - Whether to lock the power when the door is opened  
 **station** - Whether to only allow the driver to open the door where the platform is  
 
@@ -208,15 +208,15 @@ The interlock section offers different variety of train interlocking.
 ```
 [interlock]
 ; Driver can't open the door after the train departs  
-door = 1
+door = 1  
 
-; This would means the driver can't apply power when the door is opened, but no brake will be applied ;
-; If the section is sloping upwards/downwards, the train could also accelerate from the force ;  
+; The following combination means that the driver can't apply power when the door is opened, but no brake will be applied ;
+; If the track section is sloping upwards/downwards, the train could also accelerate from the force ;  
+
 ; No brake will be applied when the door is opened  
 doorapplybrake = 0  
 ; Driver can't power the train if the door is opened  
-doorpowerlock = 1
-
+doorpowerlock = 1  
 
 ; If the platform is on the left side, the driver can't open the right door  
 station = 1
@@ -254,7 +254,7 @@ If the driver does not take action, the device can automatically apply brake.
 **resetondoormove** - Whether to reset the timer when a door opened (1 to reset the timer when door opened)  
 **resetonnotchmove** - Whether to reset the timer when driver switch to another notch, or if another reverser is set (1 to reset the timer)  
 **resetonklaxon** - Specify the Klaxon (Horn) that will reset the Vigilance Timer when horned  
-**timerexceedPanel** PanelIndicator to activate when the timer exceeds the vigilance device's time limit  
+**timerexceedPanel** Panel Indicator to activate when the timer exceeds the vigilance device's time limit  
 0 = Horning won't reset the timer  
 1 = Primary Horn  
 2 = Secondary Horn  
@@ -316,11 +316,12 @@ beacon125 = 150,102
 ### [misc]
 Miscellaneous functions  
 
-**travelmeterpanel** - The Pluginstates to display how many meters the train travelled, will reset on jump stations.  
+**travelmeterpanel** - The panel indicator to display how many meters the train travelled, will reset on jump stations.  
 Adding an comma specifies the nth digit of meters, up to 6 digit  
-travelmeterpanel = `2,223` Means Pluginstates 223 will display the 2nd digit of the total meters  
+travelmeterpanel = `2,223` Means Pluginstates[223] will display the 2nd digit of the total meters  
 
-**cameramodepanel** - PluginStates to display what the camera mode currently is  
+**cameramodepanel** - Panel Indicator to display what the camera mode currently is  
+Returned Value:  
 *0* = Interior (2D Cab), F1  
 *1* = Interior (Look Ahead), F1  
 *2* = Exterior, F2  
@@ -334,12 +335,12 @@ travelmeterpanel = `2,223` Means Pluginstates 223 will display the 2nd digit of 
 disabletimeaccel = 0
 
 **crash** - The pluginstates to display/The SoundIndex played when the train crashed into the previous RunInterval train (if any)  
-This allows custom crash animations and sound  
+This would allow custom crash animations and sound  
 Format: **crash = Pluginstates,Soundindex**  
-Specified pluginstates will be reset  when the train jumped to another stations<br><br>
-Conditions:  
+Specified plugin indicator will be reset when the train jumped to another stations<br><br>
+Conditions to trigger a crash:  
 **1.** The train has not been crashed before  
-**2.** The distance between the previous train and the current train must be less than 0.2m and higher than -1m
+**2.** The distance between the previous train and the current train must be less than 0.2m and higher than -1m  
 
 **crashspeed** - The minimum speed to be considered as a crash if player's trains touches the previous train  
 
@@ -360,13 +361,13 @@ travelmeterpanel = 1,193
 travelmeterpanel = 2,192
 travelmeterpanel = 3,191
 
-; Pluginstates[230] will return 0 if the camera is in an 2D Cab
+; Pluginstates[230] will return 0 if player is in a 2D Cab
 cameramodepanel = 230
 
 ; Pressing Ctrl+J will not do anything
 disabletimeaccel = 1
 
-; When player's train crashed into the previous train, it will activate Pluginstates 213 and SoundIndex 223
+; When player's train crashed into the previous train, it will activate Pluginstates[213] and SoundIndex 223
 crash = 213,223
 
 ; If the speed is the player's train is less than 5 km/h, it won't be considered as a crash
@@ -375,6 +376,7 @@ crashspeed = 5
 
 ## Note
 **1.** Lines that does not start with semicolon (';'), square bracket ('[]') or if the line does not have an equality sign (=) will be ignored.  
-**2.** This plugin is still work in progress, README and documentation can be changed without being notified   
+**2.** This plugin is still work in progress, README and documentation can be changed without being notified  
 **3.** This plugin is built on Visual Studio 2019 targetting .NET Framework 4.6.1. Please reference OpenBveApi  
 **4.** While this plugin is made for HK Trains, you can still use it if you think the feature is applicable to your train  
+**5.** Feel free to report any bug found on the Issue tab
