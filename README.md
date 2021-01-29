@@ -199,24 +199,31 @@ key8 = 99,0,hold
 ### [interlock]
 The interlock section offers different variety of train interlocking.  
 1 means it's enabled, 0 means it's disabled  
-**door** - Whether to lock the door when the train departs  
+**door** - Whether to lock the door when the train is running  
+**doorapplybrake** - Whether to lock the power when the door is opened  
 **doorpowerlock** - Whether to lock the power when the door is opened  
-**station** - Whether to only allow the driver to open the door the platform is  
+**station** - Whether to only allow the driver to open the door where the platform is  
 
 #### Example:
 ```
 [interlock]
 ; Driver can't open the door after the train departs  
 door = 1
-; Driver can power the train whenever he wants, even if the door is open  
-doorpowerlock = 0
+
+; This would means the driver can't apply power when the door is opened, but no brake will be applied ;
+; If the section is sloping upwards/downwards, the train could also accelerate from the force ;  
+; No brake will be applied when the door is opened  
+doorapplybrake = 0  
+; Driver can't power the train if the door is opened  
+doorpowerlock = 1
+
+
 ; If the platform is on the left side, the driver can't open the right door  
 station = 1
 ```
 ### [system]
 The system section defines different security system.    
 **overspeedPanel** - PanelIndicator to activate when overspeeding  
-**idletimerexceedPanel** PanelIndicator to activate when the timer exceeds the vigilance device's time limit  
 **speedlimit** - define the speedlimit in km/h, -1 for no speed limit  
 **limitspeed** - Whether to stop the train from accelerating beyond the speedlimit  
 0 = No action will be taken  
@@ -228,9 +235,6 @@ The system section defines different security system.
 [system]  
 ; Panel Indicator on overspeed
 overspeedPanel = 201
-
-; Panel Indicator on Vigilance Timeout
-idletimerexceedPanel = 100
 
 ; Speedlimit is 70 km/h
 speedlimit = 70
@@ -250,6 +254,7 @@ If the driver does not take action, the device can automatically apply brake.
 **resetondoormove** - Whether to reset the timer when a door opened (1 to reset the timer when door opened)  
 **resetonnotchmove** - Whether to reset the timer when driver switch to another notch, or if another reverser is set (1 to reset the timer)  
 **resetonklaxon** - Specify the Klaxon (Horn) that will reset the Vigilance Timer when horned  
+**timerexceedPanel** PanelIndicator to activate when the timer exceeds the vigilance device's time limit  
 0 = Horning won't reset the timer  
 1 = Primary Horn  
 2 = Secondary Horn  
@@ -288,6 +293,9 @@ timerexceededsound = 224
 
 ; The SoundIndex played when the Vigilance Device applies brake
 timerbrakesound = 219
+
+; Panel Indicator on Vigilance Timeout
+idletimerexceedPanel = 100
 ```
 
 ### [beacon]
