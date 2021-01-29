@@ -5,6 +5,7 @@ The goal is to create an universal train plugin that is highly customizable, and
 Safety System in this plugin is rather simple, and it's intended to make sure newer player can enjoy the driving experience without too much hassle.  
 Still new to C#, any help would be apperciated!  
 ## Usage
+Download the plugin from the release page on the right.  
 Create a file called hkats.ini on the folder where the plugin is stored.  
 It is recommended to follow the template below  
 ```
@@ -366,7 +367,6 @@ crashspeed = 5
 
 ## Note
 **1.** Lines that does not start with semicolon (';'), square bracket ('[]') or if the line does not have an equality sign (=) will be ignored.  
-**2.** This plugin is still work in progress, README and documentation can be changed without being notified  
-**3.** Prebuilt binary will not be provided for now, contact LX86#2271 on discord if you need the compiled plugin  
-**4.** This plugin is built on Visual Studio 2019 targetting .NET Framework 4.6.1  
-**5.** While this plugin is made for HK Trains, you can still use it if you think the feature is applicable to your train  
+**2.** This plugin is still work in progress, README and documentation can be changed without being notified   
+**3.** This plugin is built on Visual Studio 2019 targetting .NET Framework 4.6.1. Please reference OpenBveApi  
+**4.** While this plugin is made for HK Trains, you can still use it if you think the feature is applicable to your train  

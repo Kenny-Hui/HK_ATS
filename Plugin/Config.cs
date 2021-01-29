@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using OpenBveApi.Runtime;
 
 namespace Plugin {
@@ -266,7 +265,7 @@ namespace Plugin {
                     }
                 }
             } else {
-                System.Windows.Forms.MessageBox.Show("Placeholder message: Cannot find configuration file");
+                System.Windows.Forms.MessageBox.Show("Cannot find configuration file, please follow the template on https://github.com/Kenny-Hui/HK_ATS");
             }
         }
     }
