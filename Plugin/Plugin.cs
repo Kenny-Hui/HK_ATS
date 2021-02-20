@@ -30,7 +30,7 @@ namespace Plugin {
 
         /// <summary>Is called when the plugin should initialize, reinitialize or jumping stations.</summary>
         public void Initialize(InitializationModes mode) {
-            Misc.Resetting = true;
+            Misc.Initializing = true;
             DVS.ScheduleResetTimer = true;
         }
 

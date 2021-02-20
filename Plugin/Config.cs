@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using OpenBveApi.Runtime;
+using System.Text;
 
 namespace Plugin {
     internal static class Config {
