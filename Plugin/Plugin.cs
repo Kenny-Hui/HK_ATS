@@ -10,13 +10,12 @@ namespace Plugin {
         public bool Load(LoadProperties properties) {
             MessageManager.Initialise(properties.AddMessage);
             SoundManager.Initialise(properties.PlaySound, 256);
-            Config.Load(properties);
             Panel = new int[512];
             Sound = new SoundHelper(properties.PlaySound, 256);
             properties.Panel = Panel;
-            properties.FailureReason = "HK_ATS failed to initalize, some functions will be unavailable.";
+            properties.FailureReason = "HK_ATS failed to initalize, some functions might be unavailable.";
             properties.AISupport = AISupport.None;
-            return true;
+            return Config.Load(properties);
         }
 
         public void Unload() {
