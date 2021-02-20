@@ -6,6 +6,7 @@ namespace Plugin {
         internal static bool crashed;
         internal static int CrashSpeed;
         private int[] Panel = null;
+        internal static string brand = "HK_ATS";
         /// <summary>Is called when the plugin is loaded.</summary>
         public bool Load(LoadProperties properties) {
             MessageManager.Initialise(properties.AddMessage);
@@ -13,7 +14,7 @@ namespace Plugin {
             Panel = new int[512];
             Sound = new SoundHelper(properties.PlaySound, 256);
             properties.Panel = Panel;
-            properties.FailureReason = "HK_ATS failed to initalize, some functions might be unavailable.";
+            properties.FailureReason = $"{brand} failed to initalize, some functions might be unavailable.";
             properties.AISupport = AISupport.None;
             return Config.Load(properties);
         }
