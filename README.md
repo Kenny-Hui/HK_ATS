@@ -1,9 +1,12 @@
 # HK_ATS
 ## Introduction
+**NOTE: This plugin will be deprecated after another major release (2.0)**  
+**Consider creating your own plugin with <a href="https://github.com/zbx1425/BlocklyAts">BlocklyAts</a> - A user friendly tool to create your own customized plugin instead.**  
+  
 HK_ATS is a train plugin made for Hong Kong trains in the train simulator <a href="https://github.com/leezer3/OpenBVE">OpenBVE</a>.  
 The goal is to create an universal train plugin that is highly customizable, and can be used across all Hong Kong trains.  
-Safety System in this plugin is rather simple, and it's intended to make sure newer player can enjoy the driving experience without too much hassle.  
-Still new to C#, any help would be apperciated!  
+Safety System in this plugin is rather simple, and it's intended to make sure newer player can enjoy the driving experience without too much hassle.    
+
 ## Usage
 Download the plugin from the release page on the right.  
 Create a file called hkats.ini on the folder where the plugin is stored.  
